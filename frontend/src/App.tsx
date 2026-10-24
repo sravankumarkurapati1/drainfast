@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
-import { getBacklog, getBacktest, getBrief, getCells, getHealth, getRainTrend } from './api/client'
+import { getBacklog, getBacktest, getBrief, getCells, getHealth, getOutlook, getRainTrend } from './api/client'
 import { BacklogView } from './components/BacklogView'
 import { BacktestTable, RainTrendChart } from './components/BacktestView'
 import { BriefView } from './components/BriefView'
@@ -8,6 +8,7 @@ import { Icon, type IconName } from './components/Icon'
 import { LoadState } from './components/LoadState'
 import { LogoMark, Wordmark } from './components/Logo'
 import { MapView } from './components/MapView'
+import { OutlookBanner } from './components/OutlookBanner'
 import { StormBanner } from './components/StormBanner'
 import { rainSourceFor, tomorrowIso } from './components/storm'
 import { DataSourceProvider } from './data/DataSourceContext'
@@ -18,7 +19,7 @@ import { useNeighborhoods } from './data/useNeighborhoods'
 import './App.css'
 
 const TABS: ReadonlyArray<{ id: TabId; label: string; icon: IconName }> = [
-  { id: 'brief', label: 'Morning brief', icon: 'list' },
+  { id: 'brief', label: 'Pre-storm brief', icon: 'list' },
   { id: 'map', label: 'Map', icon: 'map' },
   { id: 'backlog', label: 'Backlog', icon: 'inbox' },
   { id: 'backtest', label: 'Backtest & rain trend', icon: 'chart' },
@@ -62,6 +63,8 @@ function PanelHead({ title, subtitle, children }: { title: string; subtitle: str
 function Dashboard() {
   const [tab, setTab] = useState<TabId>('brief')
   const [date, setDate] = useState(() => tomorrowIso())
+  // True once the supervisor picks a date; until then the brief follows the next storm.
+  const [datePicked, setDatePicked] = useState(false)
   const [crews, setCrews] = useState(DEFAULT_CREWS)
   const [capacity, setCapacity] = useState(DEFAULT_CAPACITY)
   // '' = use the live forecast; a number = what-if rain override (forecast_rain_in).
@@ -88,11 +91,18 @@ function Dashboard() {
     }
   }, [])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
+  const fetchOutlook = useCallback((signal: AbortSignal) => getOutlook({ signal }), [refresh])
+  const outlook = useApi('outlook', fetchOutlook)
+  const nextStorm = outlook.data?.brief_active ? outlook.data.next_storm : null
+  // The brief follows the next storm day until the supervisor picks a date.
+  const briefDate = !datePicked && nextStorm ? nextStorm.date : date
+
   const fetchBrief = useCallback(
     (signal: AbortSignal) =>
       getBrief(
         {
-          date,
+          date: briefDate,
           crews,
           capacity_per_crew: capacity,
           forecast_rain_in: rainOverride === '' ? undefined : Number(rainOverride),
@@ -100,7 +110,7 @@ function Dashboard() {
         { signal },
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
-    [date, crews, capacity, rainOverride, refresh],
+    [briefDate, crews, capacity, rainOverride, refresh],
   )
   // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
   const fetchHealth = useCallback((signal: AbortSignal) => getHealth({ signal }), [refresh])
@@ -121,13 +131,20 @@ function Dashboard() {
   const backtest = useApi('backtest', fetchBacktest)
   const rain = useApi('rain-trend', fetchRain)
 
+  // The forecast decides WHEN the list shows; the model decides WHICH spots go first.
+  // Past dates (history) and rain what-ifs always show the ranking.
+  const today = outlook.data?.today
+  const upcoming = today !== undefined && briefDate >= today && rainOverride === ''
+  const hideList = upcoming && outlook.data !== undefined && !outlook.data.fallback && !outlook.data.brief_active
+  const useOutlookBanner = upcoming && outlook.data !== undefined && !outlook.data.fallback
+
   const cellIds = useMemo(
     () => [...(brief.data?.items ?? []).map((i) => i.cell_id), ...(backlog.data ?? []).map((b) => b.cell_id)],
     [brief.data, backlog.data],
   )
   const neighborhoods = useNeighborhoods(cellIds, cells.data)
   const rainSource = rainSourceFor(
-    brief.data?.date ?? date,
+    brief.data?.date ?? briefDate,
     brief.data?.fallback_mode ?? false,
     rainOverride !== '',
   )
@@ -151,7 +168,16 @@ function Dashboard() {
     <form className="controls" onSubmit={(e) => e.preventDefault()} aria-label="Brief settings">
       <label>
         Date
-        <input type="date" value={date} required onChange={(e) => e.target.value && setDate(e.target.value)} />
+        <input
+          type="date"
+          value={briefDate}
+          required
+          onChange={(e) => {
+            if (!e.target.value) return
+            setDate(e.target.value)
+            setDatePicked(true)
+          }}
+        />
       </label>
       <label>
         Crews
@@ -269,12 +295,18 @@ function Dashboard() {
           >
             {tab === 'brief' && (
               <>
-                <PanelHead title="Morning brief" subtitle="Ranked cells for crews to clear before the next storm">
+                <PanelHead title="Pre-storm brief" subtitle="Spots for crews to check first before the next storm">
                   {controls}
                 </PanelHead>
                 <LoadState label="Morning brief" {...brief} hasData={brief.data !== undefined} />
-                {brief.data && <StormBanner brief={brief.data} source={rainSource} />}
-                {brief.data && <BriefView brief={brief.data} neighborhoods={neighborhoods} source={rainSource} />}
+                {useOutlookBanner && outlook.data ? (
+                  <OutlookBanner outlook={outlook.data} />
+                ) : (
+                  brief.data && <StormBanner brief={brief.data} source={rainSource} />
+                )}
+                {brief.data && !hideList && (
+                  <BriefView brief={brief.data} neighborhoods={neighborhoods} source={rainSource} />
+                )}
               </>
             )}
 
@@ -284,9 +316,17 @@ function Dashboard() {
                   {controls}
                 </PanelHead>
                 <LoadState label="Morning brief" {...brief} hasData={brief.data !== undefined} />
-                {brief.data && <StormBanner brief={brief.data} source={rainSource} />}
+                {useOutlookBanner && outlook.data ? (
+                  <OutlookBanner outlook={outlook.data} />
+                ) : (
+                  brief.data && <StormBanner brief={brief.data} source={rainSource} />
+                )}
                 {brief.data && (
-                  <MapView items={brief.data.items} cells={cells.data ?? []} neighborhoods={neighborhoods} />
+                  <MapView
+                    items={hideList ? [] : brief.data.items}
+                    cells={cells.data ?? []}
+                    neighborhoods={neighborhoods}
+                  />
                 )}
               </>
             )}

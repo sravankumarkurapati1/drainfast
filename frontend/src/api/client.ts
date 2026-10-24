@@ -179,3 +179,24 @@ export const getRainTrend = (opts?: RequestOptions) =>
 /** A cell's reports, newest first. 404 for an unknown cell. No fixture exists for this path. */
 export const getCellHistory = (cellId: string, opts?: RequestOptions) =>
   apiGet<Report[]>(`/cells/${encodeURIComponent(cellId)}/history`, opts)
+
+/** One forecast day from GET /outlook. */
+export interface ForecastDay {
+  date: string
+  rain_in: number
+}
+
+/** GET /outlook: the forecast decides when the pre-storm brief shows. */
+export interface OutlookResponse {
+  today: string
+  threshold_in: number
+  lookahead_days: number
+  days: ForecastDay[]
+  next_storm: ForecastDay | null
+  brief_active: boolean
+  check_by: string | null
+  fallback: boolean
+  message: string
+}
+
+export const getOutlook = (opts?: RequestOptions) => apiGet<OutlookResponse>('/outlook', opts)
