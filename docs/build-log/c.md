@@ -25,6 +25,14 @@
 - High-tide flag: until B's `tide_threshold.json` exists, the backend uses the 95th percentile of daily highs from `data/raw/tide` (12.177 ft MLLW).
 - Security decision: the API has no authentication on purpose. It is read-only, serves only public 311, NOAA and NWS data, and the rules require judges to use the live link free and without restriction. CORS allows GET only from FRONTEND_ORIGIN. No secrets are exposed: Bedrock is off in the deployed container (DRAINFAST_FALLBACK=1).
 
+## Integration with A and B (main at fd1ef48)
+- Merged main twice and never edited A's or B's files.
+- The backend now ranks with B's `model.service.score_cells`. The model is local, so it is used in fallback mode too. Results are cached per (date, rain, tide); the first call takes about 3 to 7 s, repeats about 0.07 s.
+- Fixes for real pipeline files:
+  - Non-contract columns (A's `exclude`, `bwsc_share`) are dropped before validation, and reports marked `exclude` are skipped.
+  - B's `rain_trend.json` wraps its points in an object, so the loader reads `points`.
+- Live numbers: 6,971 reports, 8,818 cells, 5,412 storm days, 3 backtest storms, 15 rain-trend years, and B's tide threshold of 12.177 ft. The brief for 2023-12-18 returns 9 cells with ticket evidence. 58 tests pass (A, B and C).
+
 ## Open items
 - Swap the local contract stand-ins for the real contracts/schemas.py once merged, then re-run `make test`.
 - Optional: an IDE screenshot of the same MCP question for the write-up.

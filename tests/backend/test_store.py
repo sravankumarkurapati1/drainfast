@@ -27,3 +27,11 @@ def test_extra_columns_are_ignored_and_excluded_rows_dropped(empty_demo_dir):
     loaded_cells, c_fixture = store.load_cells()
     assert not r_fixture and len(loaded_reports) == len(reports) - 1
     assert not c_fixture and len(loaded_cells) == len(cells)
+
+
+def test_rain_trend_wrapper_object_is_read(empty_demo_dir):
+    (empty_demo_dir / "rain_trend.json").write_text(json.dumps({
+        "points": [{"year": 2024, "heavy_rain_days": 9}, {"year": 2025, "heavy_rain_days": 11}],
+        "slope_per_decade": 0.9, "slope_years": [2024, 2025]}))
+    points, used_fixture = store.load_rain_trend()
+    assert not used_fixture and [p.year for p in points] == [2024, 2025]

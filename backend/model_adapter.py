@@ -13,7 +13,9 @@ from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from typing import Any, Iterable, Optional
 
-from backend.config import weights
+from functools import lru_cache
+
+from backend.config import demo_dir, weights
 from contracts.schemas import CauseLabel, FactorContribution, Report
 
 log = logging.getLogger(__name__)
@@ -124,13 +126,31 @@ def fallback_scores(reports: list[Report], as_of: date, rain_in: float) -> dict[
     return out
 
 
+@lru_cache(maxsize=64)
+def _model_scores(as_of: date, rain_in: float, high_tide: bool, data_mtime: float) -> dict[str, CellScore]:
+    """Cached model.service.score_cells (about 7 s per call on the full grid).
+
+    Keyed on the inputs and the mtime of the demo files, so new pipeline output is used
+    without a restart.
+    """
+    from model.service import score_cells  # public API of module B
+    return normalize_model_output(score_cells(as_of, rain_in, high_tide))
+
+
+def _demo_mtime() -> float:
+    files = [demo_dir() / n for n in ("reports.parquet", "cells.parquet", "model.joblib")]
+    return max((f.stat().st_mtime for f in files if f.exists()), default=-1.0)
+
+
 def score(reports: list[Report], as_of: date, rain_in: float, high_tide: bool,
           use_model: bool = True) -> tuple[dict[str, CellScore], bool]:
-    """Return ({cell_id: CellScore}, used_fallback_scorer)."""
+    """Return ({cell_id: CellScore}, used_fallback_scorer).
+
+    The model is local (no network, no AI), so it is used in fallback mode too.
+    """
     if use_model:
         try:
-            from model.service import score_cells  # public API of module B
-            scores = normalize_model_output(score_cells(as_of, rain_in, high_tide))
+            scores = _model_scores(as_of, round(float(rain_in), 3), bool(high_tide), _demo_mtime())
             if scores:
                 return scores, False
             log.warning("model.service.score_cells returned no usable rows; using fallback scorer")

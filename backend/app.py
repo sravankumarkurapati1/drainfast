@@ -83,7 +83,7 @@ def get_brief(
     rain_in, high_tide, fallback_mode = _weather_for(date, forecast_rain_in)
     reports, _ = store.load_reports()
     cells, _ = store.load_cells()
-    scores, _ = model_adapter.score(reports, date, rain_in, high_tide, use_model=not fallback_on())
+    scores, _ = model_adapter.score(reports, date, rain_in, high_tide)
     return priority.build_brief(date, crews, capacity_per_crew, rain_in, high_tide, scores, cells, reports,
                                 fallback_mode or fallback_on())
 
@@ -94,7 +94,7 @@ def get_backlog(limit: Annotated[int, Query(ge=1)] = 50) -> list[BacklogItem]:
     now = datetime.now(BOSTON)
     reports, _ = store.load_reports()
     cells, _ = store.load_cells()
-    scores, _ = model_adapter.score(reports, now.date(), 0.0, False, use_model=not fallback_on())
+    scores, _ = model_adapter.score(reports, now.date(), 0.0, False)
     return priority.build_backlog(now, limit, scores, cells, reports)
 
 

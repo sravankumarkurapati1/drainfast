@@ -69,7 +69,19 @@ def _read_file(path: Path) -> Optional[list[dict[str, Any]]]:
         if path.suffix == ".parquet":
             return pd.read_parquet(path).to_dict(orient="records")
         data = json.loads(path.read_text())
-        return data if isinstance(data, list) else None
+        if isinstance(data, list):
+            return data
+        # Accept a wrapper object, e.g. {"points": [...], "slope_per_decade": ...} from
+        # model.trend: use "points" or "items" if present, else the only list of records.
+        if isinstance(data, dict):
+            for key in ("points", "items"):
+                if isinstance(data.get(key), list):
+                    return data[key]
+            records = [v for v in data.values()
+                       if isinstance(v, list) and v and all(isinstance(x, dict) for x in v)]
+            if len(records) == 1:
+                return records[0]
+        return None
     except Exception as e:  # unreadable file: fall back, never crash
         log.warning("could not read %s: %s", path, e)
         return None
