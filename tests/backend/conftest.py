@@ -13,6 +13,14 @@ os.environ["DRAINFAST_FALLBACK"] = "1"
 
 
 @pytest.fixture(autouse=True)
+def _fresh_forecast_cache() -> None:
+    """Each test starts with empty NWS caches so canned payloads never leak between tests."""
+    from backend import sources
+    sources._rain_cache.clear()
+    sources._grid_cache.clear()
+
+
+@pytest.fixture(autouse=True)
 def _no_network(monkeypatch: pytest.MonkeyPatch) -> None:
     def refuse(*_a: object, **_k: object) -> None:
         raise OSError("network disabled in tests")

@@ -101,7 +101,10 @@ def build_brief(day: date, crews: int, capacity_per_crew: int, rain_in: float, h
         evidence = evidence_for(by_cell.get(cid, []), day, max_evidence)
         if not evidence:
             continue  # product rule 2: no evidence, no item
-        factors = list(cs.factors) + cell_factors(cell_map.get(cid), high_tide)
+        # Rain is the same for every location, so it is shown once at the top of the
+        # brief (BriefResponse.forecast_rain_in), not as a per-location factor. The
+        # model's rain term is a constant shift, so dropping it keeps the ranking.
+        factors = [f for f in cs.factors if not is_rain_factor(f)] + cell_factors(cell_map.get(cid), high_tide)
         ranked.append((total(factors), cid, factors, evidence))
     ranked.sort(key=lambda t: (-t[0], t[1]))
 
