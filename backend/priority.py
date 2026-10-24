@@ -41,8 +41,14 @@ def total(factors: list[FactorContribution]) -> float:
     return sum(f.contribution for f in factors)
 
 
+# Factors whose value needs a unit or article to read naturally in a reason sentence.
+PHRASES = {"Recent clogged drain": "a recent clogged drain ({v:g} days ago)"}
+
+
 def _phrase(f: FactorContribution) -> str:
     """'past clogged-drain reports (8)'; yes/no flags without a number; acronyms kept."""
+    if f.factor in PHRASES:
+        return PHRASES[f.factor].format(v=f.value)
     name = f.factor if f.factor[:2].isupper() else f.factor[0].lower() + f.factor[1:]
     return name if f.value in (0.0, 1.0) and "report" not in name.lower() else f"{name} ({f.value:g})"
 

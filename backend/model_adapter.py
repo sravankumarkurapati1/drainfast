@@ -24,7 +24,8 @@ PLAIN_NAMES = {
     "past_fixable_count": "Past clogged-drain reports",
     "past_fixable_365d": "Clogged-drain reports in the last year",
     "past_total_reports": "All past reports",
-    "days_since_last_fixable": "Days since the last clogged drain",
+    # Fewer days means higher risk (negative coefficient), so name it for what raises the score.
+    "days_since_last_fixable": "Recent clogged drain",
     "leaf_season": "Leaf season",
     "rain_in": "Forecast rain",
     "high_tide": "High tide",
