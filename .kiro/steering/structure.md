@@ -17,8 +17,9 @@ drainfast/
 ├── tests/
 │   ├── contracts/  data_pipeline/  model/  backend/
 ├── data/
-│   ├── raw/  processed/   gitignored
-│   └── demo/              small committed snapshot for judges
+│   ├── raw/               committed source downloads (311, rain, tide, basins, EJ, flood)
+│   ├── processed/         gitignored scratch space
+│   └── demo/              committed pipeline outputs; the app runs from here
 ├── docs/
 │   ├── build-log/         a.md, b.md, c.md, d.md (one per person)
 │   └── kiro-writeup.md
@@ -41,11 +42,13 @@ task belongs to.
 Dependencies point one way only:
 contracts ← data_pipeline ← model and evaluation ← backend ← frontend (over HTTP)
 
-- data_pipeline writes files to the paths in contracts.paths. It never imports from
-  model, evaluation or backend. It exposes label_report(text) in
-  data_pipeline/labeler.py for the backend to reuse.
-- model exposes rank_cells(as_of, forecast_rain_in, crews, capacity_per_crew),
-  rank_backlog(as_of) and explain_cell(cell_id, as_of) in model/service.py.
+- All pipeline outputs go to data/demo/ (committed). data/raw/ is committed.
+- Grid cells come from contracts/cells.py (cell_id, cell_center). Never redefine
+  the grid.
+- data_pipeline never imports from model, evaluation or backend. It exposes
+  label_report(text) in data_pipeline/labeler.py for the backend to reuse.
+- model exposes score_cells(as_of, rain_in, high_tide) in model/service.py. The
+  backend builds the priority score, brief and backlog in backend/priority.py.
 - evaluation exposes backtest and equity_view in evaluation/service.py.
 - backend imports those public functions only, never private helpers.
   Nothing imports from backend.
@@ -60,8 +63,8 @@ contracts ← data_pipeline ← model and evaluation ← backend ← frontend (o
 - Extra specs for a module start with that module's number (01*, 02*, 03*, 04*).
 
 ## Dependencies
-- Each Python module has its own requirements.txt. The root requirements.txt only
-  includes them with -r lines. Add a package only to your own module's file.
+- Python packages are listed only in the root requirements.txt, pinned with ==.
+  Ask C (owner) to add a package; do not create module requirements files.
 - frontend/package.json belongs to the frontend owner.
 
 ## Git workflow
@@ -71,7 +74,7 @@ contracts ← data_pipeline ← model and evaluation ← backend ← frontend (o
 - Merge order at each phase gate: A, then B, then C, then D.
 - Contract changes use a pull request titled "contract: ..." and need approval from
   every module that uses the changed contract.
-- Never add .kiro/ to .gitignore. Never commit data/raw, data/processed or .env.
+- Never add .kiro/ to .gitignore. Never commit data/processed or .env.
 
 ## When a task needs something outside its module
 Stop and say what is needed and which owner should change it. Do not edit another

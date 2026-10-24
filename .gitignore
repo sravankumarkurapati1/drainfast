@@ -1,0 +1,12 @@
+# Never ignore .kiro/ (hackathon rule). data/raw/ and data/demo/ are committed.
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+.env
+data/processed/
+node_modules/
+frontend/dist/
+.DS_Store

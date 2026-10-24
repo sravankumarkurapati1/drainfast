@@ -26,8 +26,8 @@ inclusion: always
 - Environmental justice block groups: MassGIS.
 - Climate Ready Boston flood areas.
 - Street trees: optional.
-- Storage: data/raw/ and data/processed/ are gitignored; data/demo/ is a small
-  committed snapshot so the app runs for judges.
+- Storage: data/raw/ holds the committed source files. All pipeline outputs go to
+  data/demo/ (committed) so the app runs for judges. data/processed/ is gitignored.
 
 ## Hard rules
 1. Numbers come from code. The LLM may explain or classify, but every count, rate,
@@ -48,12 +48,15 @@ inclusion: always
    uses them. Validate every LLM label against the CauseLabel enum; anything invalid
    becomes "unclear".
 8. Cells are roughly 100 m grid squares, and the same coordinates always map to the
-   same cell_id.
+   same cell_id. Grid cells come from contracts/cells.py; never redefine the grid.
 9. A storm day has 1 inch or more of rain at Boston Logan (configurable).
 10. Priority scores are a sum of named factor contributions, returned with the score
     so the UI can show the breakdown.
 11. MCP tools (forecast, tide, cell history) and API endpoints call the same Python
     functions. Logic is never duplicated between them.
+12. Python packages are listed only in the root requirements.txt.
+13. model exposes score_cells(as_of, rain_in, high_tide) in model/service.py; the
+    backend builds the priority score, brief and backlog in backend/priority.py.
 
 ## Python conventions
 - Type hints on every function. Prefer small, pure functions; no global mutable state.
