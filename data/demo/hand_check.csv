@@ -1,0 +1,51 @@
+ticket_id,text,closing_note,cause_label,label_source,human_label
+101000398628,Catchbasin,Contractor repaired CB 4/4.,unclear,rule,TODO
+101000400443,Catchbasin,BWSC crew replaced cover and lowered to grade on 3/26.,unclear,rule,TODO
+101000406694,Catchbasin,This request has been compleetd and has been done in the past.,unclear,rule,TODO
+101000418524,Catchbasin,Contractor repaired CB 5/30.,unclear,rule,TODO
+101000458593,Catchbasin,Catch basin repaired 8/8/12.,unclear,rule,TODO
+101000491585,Catchbasin,No Damage to manhole police on scene 10/12/12,unclear,rule,TODO
+101000495355,Catchbasin,cb repaired 11/01/12,unclear,rule,TODO
+101000498133,Roadway Flooding,Crew found no sewer flood on arrival 10/29. Cleared leaves from CB?s.,clogged_basin,rule,TODO
+101000745101,Catchbasin,Crew cleaned Drop Inlet 2/26.,clogged_basin,rule,TODO
+101000855532,Catchbasin,RELIEVED FLOOD 6/7.,clogged_basin,rule,TODO
+101000898324,Catchbasin,FLOOD WAS GONE ON ARRIVAL 8/9,unclear,rule,TODO
+101000973015,Catchbasin,releaed flood 11/27/13,unclear,rule,TODO
+101001241038,Catchbasin,NO LEAK PUDDLE DUE TO LAY OF LAND INFRONT OF HYD NO NOISE OR LEAK ON HYDRANT 1/2/15,unclear,rule,TODO
+101001262413,Catchbasin,CLEARED SNOW FROM BASIN 1/29,clogged_basin,rule,TODO
+101001428896,Catchbasin,BWSC reports that patches were made surrounding the manhole cover on 7/16. Thank you.,unclear,rule,TODO
+101001520537,Catchbasin,Catch Basin REPAIRED 8/14,unclear,rule,TODO
+101001613265,Catchbasin,CONTRACTOR REPAIRED CATCH BASIN AND LATERAL on 10/21,unclear,rule,TODO
+101001715881,Catchbasin,BWSC CREW INVESTIGATED AGAIN 3/4/16. DID NOT FIND GATE ABOVE GRADE AS SHOWN IN PICTURE. SENT SUPERVISOR WITH PICTURE BACK TO LOCATION AND IT IS NOT LOCATED AT 133 ORLANDO ST. NO BWSC STRUCTURE ABOVE GRADE HERE 3/7/16. PLEASE RESUBMIT WITH A BETTER LOCATION. THANK YOU.,unclear,rule,TODO
+101001728683,Catchbasin,CLEANED AND DISINFECTED Catch basin on 3/14,clogged_basin,rule,TODO
+101001753284,Catchbasin,BWSC cleaned Catch basin 0n 3/31,clogged_basin,rule,TODO
+101001790929,Catchbasin,CLEANED AND DISINFECTED ON 5/17,clogged_basin,rule,TODO
+101001915499,Catchbasin,BWSC flushed & disinfected on 9/22,clogged_basin,rule,TODO
+101001936439,Catchbasin,CREW INVESTIGATED ON ARRIVAL FOUND NO FLOOD IN AREA 10/24,unclear,rule,TODO
+101002012861,Catchbasin,BWSC RAISED AROUND GATE WITH PATCH 2/17,unclear,rule,TODO
+101002033594,Catchbasin,BWSC CLEANED AND DISINFECTED 3/28,clogged_basin,rule,TODO
+101002037353,Catchbasin,BWSC found NO FLOOD IN STREET 3/15,unclear,rule,TODO
+101002057968,Catchbasin,PUMPED DOWN CB TAKING WATER ALL SET ON DEPARTURE 4/6,unclear,rule,TODO
+101002120446,Catchbasin,BWSC cleaned catch basin's down and running 6/27.,clogged_basin,rule,TODO
+101002177765,Catchbasin,BWSC found no flood on 8.3.,unclear,rule,TODO
+101002249300,Catchbasin,BWSC HAS NOTHING IN THE REAR OF THIS BUILDING CHECKED AREA NO FLOOD 10/25,unclear,rule,TODO
+101002633037,Catchbasin,BWSC reports the catchbasin is cleared.,clogged_basin,rule,TODO
+101002722144,Catchbasin,Dear Constituent If you receive a message from the City of Boston regarding an old service request 311 is currently working on closing out backlogged service requests. We apologize for any confusion or inconvenience. Please contact 311 for further information. Thank you Boston 311 Team,unclear,rule,TODO
+101002767859,Catchbasin,BWSC STATED THEY CLEANED OFF CB IN FRONT OF 195 RELIEVED FLOOD 1/1/19.,clogged_basin,rule,TODO
+101003480235,Catchbasin,CREW CLEARED DISINFECTED FLUSHED AND JETTED ALL 4 CB'S IN THIS AREA. 10/26,clogged_basin,rule,TODO
+101003589793,Catchbasin,REMOVED LEAVES & DEBRIS FROM CB'S. 1/15,clogged_basin,rule,TODO
+101003660551,Catchbasin,Contractor repaired cb. 3/11,unclear,rule,TODO
+101003941137,Catchbasin,BWSC reports CLEANED AND DISINFECTED CB. 9/4,clogged_basin,rule,TODO
+101004357581,Catchbasin,CUSTOMER NOT ON SITE. CALLED HER EXPLAINED SHE NEEDS TO BE THERE TO POINT OUT WHICH CB PHONE FELL IN SHE WILL CALL BACK. 6/18,unclear,rule,TODO
+101004686877,Catchbasin,CLEARED DI CB OF DEBRIS. 5/16,clogged_basin,rule,TODO
+101004874742,Catchbasin,CLEANED CB. 6/14,clogged_basin,rule,TODO
+101005175651,Catchbasin,BWSC states: No flood or CB here. 11/24 -JF,unclear,rule,TODO
+101005196584,Catchbasin,"BWSC states: ""Cleared leaves from cb. """,clogged_basin,rule,TODO
+101005243516,Catchbasin,CLEARED DEBRIS OFF OF CB. CB IN TO BE RODDED. 1/10,clogged_basin,rule,TODO
+101005341461,Catchbasin,JETTED CB LATERAL 25FT. CB TAKING WATER. 3/11,unclear,rule,TODO
+101005341736,Catchbasin,NO FLOOD UPON ARRIVAL CB TAKING WATER. 3/8,unclear,rule,TODO
+101005350660,Catchbasin,CLEANED AND DISINFECTED CB. ON DEPARTURE CB TAKING WATER. 3/14,unclear,rule,TODO
+101005387435,Catchbasin,REMOVED DEBRIS FROM CB. 10/21,clogged_basin,rule,TODO
+101005608880,Catchbasin,Per BWSC: CLEANED CB'S. 8/6,clogged_basin,rule,TODO
+101006007435,Catchbasin,PER BWSC RETRIEVED KEYS FOR CUSTOMER 3/29,unclear,rule,TODO
+101006277251,Catchbasin,RETRIEVED PHONE AND PROVIDED TO CUSTOMER. 9/7,unclear,rule,TODO

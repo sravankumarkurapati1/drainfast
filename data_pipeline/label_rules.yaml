@@ -1,0 +1,13 @@
+# Cause-label rules, checked top to bottom. The first group with a matching keyword wins.
+# Negative groups come first so "cleaned, takes water" is unclear, not clogged_basin.
+# A keyword matches at the start of a word: "clean" matches "cleaned", "clear" does not
+# match "unclear". Matching is case-insensitive.
+rules:
+  - label: unclear
+    keywords: [takes water, taking water, no cleaning needed, no flooding, not blocked, clear on arrival]
+  - label: grading_capacity
+    keywords: [grading, pitch, ponding, low spot, no catch basin, private, not bwsc, pwd, construction]
+  - label: coastal_tide
+    keywords: [tide, tidal, coastal]
+  - label: clogged_basin
+    keywords: [clean, clear, debris, leaves, vactor, jet, flush, relieved flood, removed]

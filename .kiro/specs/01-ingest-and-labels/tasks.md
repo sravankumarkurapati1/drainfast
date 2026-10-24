@@ -1,0 +1,30 @@
+# Implementation Plan: 01-ingest-and-labels
+
+- [x] 1. Package skeleton and paths
+  - `data_pipeline/__init__.py`, `data_pipeline/paths.py`
+  - _Requirements: 5.3_
+- [x] 2. Crew-note cleaning in `data_pipeline/notes.py`
+  - Strip "Case Closed" prefix (ISO and "Tue Oct 21 ... EDT 2014" dates) and status phrase
+  - `note_blank`, `exclude`
+  - _Requirements: 2.1-2.4_
+- [x] 3. Rule labeler
+  - `data_pipeline/label_rules.yaml` in the order unclear, grading_capacity, coastal_tide, clogged_basin
+  - `data_pipeline/labeler.py`: `rule_label`, `label_note`, public `label_report(text)`
+  - _Requirements: 3.1-3.7_
+- [x] 4. Bedrock labeler with fallback and cache
+  - `data_pipeline/llm.py`, `data_pipeline/label_prompt.txt`
+  - _Requirements: 4.1-4.7_
+- [x] 5. Ingest and geo flags
+  - `data_pipeline/ingest.py` (`load_raw`, `clean_reports`), `data_pipeline/geo.py`
+  - _Requirements: 1.1-1.9, 5.1, 5.2_
+- [x] 6. Hand check and scoring in `data_pipeline/handcheck.py`
+  - _Requirements: 6.1-6.3_
+- [x] 7. CLI `data_pipeline/run.py` with summary and `--score`
+  - _Requirements: 5.3, 5.4, 7.1_
+- [x] 8. Property tests in `tests/data_pipeline/`
+  - [x] 8.1 Every label is one of the four values (Property 1)
+  - [x] 8.2 Same note, same label (Property 2)
+  - [x] 8.3 Drops only for logged reasons; kept + dropped = input (Property 3)
+  - [x] 8.4 LLM only for undecided notes; invalid answer gives unclear (Property 4)
+  - _Requirements: 8.1_
+- [x] 9. Verify: `DRAINFAST_FALLBACK=1 make data`, record the unclear count

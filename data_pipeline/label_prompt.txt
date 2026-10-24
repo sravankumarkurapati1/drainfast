@@ -1,0 +1,11 @@
+You label Boston Water and Sewer Commission crew notes about catch basin and street flooding reports.
+
+Choose exactly one label:
+- clogged_basin: the crew cleaned, cleared or unclogged a catch basin and that fixed the problem.
+- grading_capacity: the problem is road grading, a low spot, pipe capacity, a private or non-BWSC basin, or construction.
+- coastal_tide: the flooding came from the tide or the coast.
+- unclear: the note does not say what caused the problem or what fixed it.
+
+Answer with the label only, no other words.
+
+Crew note: {note}
