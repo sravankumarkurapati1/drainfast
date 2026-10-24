@@ -34,7 +34,7 @@ task belongs to.
 |---|---|
 | A (data) | data_pipeline/, tests/data_pipeline/, .kiro/specs/01-ingest-and-labels/ |
 | B (model) | model/, evaluation/, tests/model/, .kiro/specs/02-risk-model-backtest/ |
-| C (backend, lead) | backend/, mcp_server/, tests/backend/, .kiro/specs/03-api-copilot/, .kiro/settings/mcp.json, Dockerfile, Makefile |
+| C (backend, lead) | backend/, mcp_server/, tests/backend/, .kiro/specs/03-*, .kiro/settings/mcp.json, .kiro/agents/, Dockerfile, Makefile, requirements.txt |
 | D (frontend) | frontend/, .kiro/specs/04-frontend/, README.md, docs/kiro-writeup.md |
 | Everyone (frozen) | contracts/, tests/contracts/, the three shared steering files |
 
@@ -59,6 +59,8 @@ contracts ← data_pipeline ← model and evaluation ← backend ← frontend (o
 - Tests: tests/<module>/test_<thing>.py.
 - React components: PascalCase.tsx in frontend/src/components/.
 - Hooks: .kiro/hooks/<owner letter>-<name>.json (for example b-backtest.json).
+- Custom agents: .kiro/agents/<name>.md. These are shared team tools (for example
+  drainfast-pr-reviewer); owner C maintains them, and anyone may use them.
 - Module steering: .kiro/steering/<module>-rules.md with a fileMatch pattern.
 - Extra specs for a module start with that module's number (01*, 02*, 03*, 04*).
 
