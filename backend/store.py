@@ -14,7 +14,7 @@ from typing import Any, Optional, TypeVar
 import pandas as pd
 from pydantic import ValidationError
 
-from backend.config import demo_dir, fixtures_dir
+from backend.config import demo_dir, fallback_on, fixtures_dir
 from backend.paths import RAW_DIR
 from contracts.schemas import BacktestResult, Cell, ContractModel, RainTrendPoint, Report, Storm
 
@@ -103,6 +103,10 @@ def _load_cached(demo_path: str, mtime: float, fixture_name: str, model: type[M]
         items = _validate_rows(rows, model, demo_path)
         if items:
             return tuple(items), False
+    if not fallback_on():
+        # Live mode never serves sample data: a missing pipeline file is an error to fix.
+        log.error("%s missing or has no valid rows; run the pipeline (make data/cells/model)", demo_path)
+        return (), False
     fixture = fixtures_dir() / fixture_name
     log.info("using fixture %s for %s", fixture, demo_path)
     return tuple(_validate_rows(_read_file(fixture) or [], model, str(fixture))), True
