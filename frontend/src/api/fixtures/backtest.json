@@ -1,0 +1,35 @@
+[
+  {
+    "storm_day": "2023-09-12",
+    "n_fixable_reports": 214,
+    "n_cells": 6812,
+    "hit_rate_top100": 0.431,
+    "hit_rate_top200": 0.562,
+    "random_top100": 0.016,
+    "random_top200": 0.038,
+    "most_complaints_top100": 0.241,
+    "most_complaints_top200": 0.34
+  },
+  {
+    "storm_day": "2024-08-09",
+    "n_fixable_reports": 167,
+    "n_cells": 6812,
+    "hit_rate_top100": 0.417,
+    "hit_rate_top200": 0.568,
+    "random_top100": 0.02,
+    "random_top200": 0.039,
+    "most_complaints_top100": 0.273,
+    "most_complaints_top200": 0.38
+  },
+  {
+    "storm_day": "2025-10-30",
+    "n_fixable_reports": 241,
+    "n_cells": 6812,
+    "hit_rate_top100": 0.429,
+    "hit_rate_top200": 0.562,
+    "random_top100": 0.014,
+    "random_top200": 0.04,
+    "most_complaints_top100": 0.265,
+    "most_complaints_top200": 0.344
+  }
+]

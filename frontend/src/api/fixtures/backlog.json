@@ -1,0 +1,744 @@
+[
+  {
+    "ticket_id": "101006542542",
+    "cell_id": "c_180_143",
+    "opened_at": "2026-04-22T01:26:24-04:00",
+    "age_days": 42.44,
+    "cause_label": "coastal_tide",
+    "note_blank": false,
+    "status_label": "Tide-driven backup",
+    "priority_score": 3.936,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 4.0,
+        "contribution": 1.4
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.7102,
+        "contribution": 0.8522
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.37,
+        "contribution": 0.185
+      },
+      {
+        "factor": "age_days",
+        "value": 42.44,
+        "contribution": 0.8488
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006542542",
+      "101006550461",
+      "101006558380",
+      "101006566299"
+    ]
+  },
+  {
+    "ticket_id": "101006487109",
+    "cell_id": "c_172_132",
+    "opened_at": "2026-05-07T11:31:12-04:00",
+    "age_days": 27.02,
+    "cause_label": "unclear",
+    "note_blank": true,
+    "status_label": "Status unclear",
+    "priority_score": 3.3316,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 4.0,
+        "contribution": 1.4
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.551,
+        "contribution": 0.6612
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.16,
+        "contribution": 0.08
+      },
+      {
+        "factor": "age_days",
+        "value": 27.02,
+        "contribution": 0.5404
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006487109",
+      "101006495028",
+      "101006502947",
+      "101006510866"
+    ]
+  },
+  {
+    "ticket_id": "101006431676",
+    "cell_id": "c_103_98",
+    "opened_at": "2026-05-12T00:57:36-04:00",
+    "age_days": 22.46,
+    "cause_label": "unclear",
+    "note_blank": true,
+    "status_label": "Status unclear",
+    "priority_score": 3.1194,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 3.0,
+        "contribution": 1.05
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.7668,
+        "contribution": 0.9202
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.1,
+        "contribution": 0.05
+      },
+      {
+        "factor": "age_days",
+        "value": 22.46,
+        "contribution": 0.4492
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006431676",
+      "101006439595",
+      "101006447514"
+    ]
+  },
+  {
+    "ticket_id": "101006597975",
+    "cell_id": "c_126_123",
+    "opened_at": "2026-04-30T14:09:36-04:00",
+    "age_days": 33.91,
+    "cause_label": "unclear",
+    "note_blank": true,
+    "status_label": "Status unclear",
+    "priority_score": 2.9249,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 2.0,
+        "contribution": 0.7
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.7764,
+        "contribution": 0.9317
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.43,
+        "contribution": 0.215
+      },
+      {
+        "factor": "age_days",
+        "value": 33.91,
+        "contribution": 0.6782
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006597975",
+      "101006605894"
+    ]
+  },
+  {
+    "ticket_id": "101006677165",
+    "cell_id": "c_97_58",
+    "opened_at": "2026-04-20T18:00:00-04:00",
+    "age_days": 43.75,
+    "cause_label": "unclear",
+    "note_blank": true,
+    "status_label": "Status unclear",
+    "priority_score": 2.9008,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 3.0,
+        "contribution": 1.05
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.7715,
+        "contribution": 0.9258
+      },
+      {
+        "factor": "flood_area",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.1,
+        "contribution": 0.05
+      },
+      {
+        "factor": "age_days",
+        "value": 43.75,
+        "contribution": 0.875
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006677165",
+      "101006685084",
+      "101006693003"
+    ]
+  },
+  {
+    "ticket_id": "101006415838",
+    "cell_id": "c_101_114",
+    "opened_at": "2026-04-19T14:52:48-04:00",
+    "age_days": 44.88,
+    "cause_label": "coastal_tide",
+    "note_blank": false,
+    "status_label": "Tide-driven backup",
+    "priority_score": 2.842,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 2.0,
+        "contribution": 0.7
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.3037,
+        "contribution": 0.3644
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.46,
+        "contribution": 0.23
+      },
+      {
+        "factor": "age_days",
+        "value": 44.88,
+        "contribution": 0.8976
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006415838",
+      "101006423757"
+    ]
+  },
+  {
+    "ticket_id": "101006574218",
+    "cell_id": "c_176_115",
+    "opened_at": "2026-05-28T21:36:00-04:00",
+    "age_days": 5.6,
+    "cause_label": "coastal_tide",
+    "note_blank": false,
+    "status_label": "Tide-driven backup",
+    "priority_score": 2.8333,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 3.0,
+        "contribution": 1.05
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.8636,
+        "contribution": 1.0363
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.47,
+        "contribution": 0.235
+      },
+      {
+        "factor": "age_days",
+        "value": 5.6,
+        "contribution": 0.112
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006574218",
+      "101006582137",
+      "101006590056"
+    ]
+  },
+  {
+    "ticket_id": "101006518785",
+    "cell_id": "c_167_137",
+    "opened_at": "2026-05-22T19:26:24-04:00",
+    "age_days": 11.69,
+    "cause_label": "coastal_tide",
+    "note_blank": false,
+    "status_label": "Tide-driven backup",
+    "priority_score": 2.8117,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 3.0,
+        "contribution": 1.05
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.6149,
+        "contribution": 0.7379
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.28,
+        "contribution": 0.14
+      },
+      {
+        "factor": "age_days",
+        "value": 11.69,
+        "contribution": 0.2338
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006518785",
+      "101006526704",
+      "101006534623"
+    ]
+  },
+  {
+    "ticket_id": "101006661327",
+    "cell_id": "c_145_97",
+    "opened_at": "2026-05-01T20:52:48-04:00",
+    "age_days": 32.63,
+    "cause_label": "coastal_tide",
+    "note_blank": false,
+    "status_label": "Tide-driven backup",
+    "priority_score": 2.6954,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 2.0,
+        "contribution": 0.7
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.7398,
+        "contribution": 0.8878
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.11,
+        "contribution": 0.055
+      },
+      {
+        "factor": "age_days",
+        "value": 32.63,
+        "contribution": 0.6526
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006661327",
+      "101006669246"
+    ]
+  },
+  {
+    "ticket_id": "101006463352",
+    "cell_id": "c_58_88",
+    "opened_at": "2026-05-26T21:07:12-04:00",
+    "age_days": 7.62,
+    "cause_label": "coastal_tide",
+    "note_blank": false,
+    "status_label": "Tide-driven backup",
+    "priority_score": 2.4399,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 2.0,
+        "contribution": 0.7
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.7104,
+        "contribution": 0.8525
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.17,
+        "contribution": 0.085
+      },
+      {
+        "factor": "age_days",
+        "value": 7.62,
+        "contribution": 0.1524
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006463352",
+      "101006471271"
+    ]
+  },
+  {
+    "ticket_id": "101006613813",
+    "cell_id": "c_131_131",
+    "opened_at": "2026-05-18T20:38:24-04:00",
+    "age_days": 15.64,
+    "cause_label": "coastal_tide",
+    "note_blank": false,
+    "status_label": "Tide-driven backup",
+    "priority_score": 2.3669,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 3.0,
+        "contribution": 1.05
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.4201,
+        "contribution": 0.5041
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.2,
+        "contribution": 0.1
+      },
+      {
+        "factor": "age_days",
+        "value": 15.64,
+        "contribution": 0.3128
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006613813",
+      "101006621732",
+      "101006629651"
+    ]
+  },
+  {
+    "ticket_id": "101006400000",
+    "cell_id": "c_90_108",
+    "opened_at": "2026-04-30T18:14:24-04:00",
+    "age_days": 33.74,
+    "cause_label": "clogged_basin",
+    "note_blank": false,
+    "status_label": "Basin likely clogged",
+    "priority_score": 2.3304,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 1.0,
+        "contribution": 0.35
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.5213,
+        "contribution": 0.6256
+      },
+      {
+        "factor": "flood_area",
+        "value": 1.0,
+        "contribution": 0.4
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.06,
+        "contribution": 0.03
+      },
+      {
+        "factor": "age_days",
+        "value": 33.74,
+        "contribution": 0.6748
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006400000"
+    ]
+  },
+  {
+    "ticket_id": "101006479190",
+    "cell_id": "c_67_93",
+    "opened_at": "2026-05-07T11:02:24-04:00",
+    "age_days": 27.04,
+    "cause_label": "clogged_basin",
+    "note_blank": false,
+    "status_label": "Basin likely clogged",
+    "priority_score": 1.9171,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 1.0,
+        "contribution": 0.35
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.4886,
+        "contribution": 0.5863
+      },
+      {
+        "factor": "flood_area",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.38,
+        "contribution": 0.19
+      },
+      {
+        "factor": "age_days",
+        "value": 27.04,
+        "contribution": 0.5408
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006479190"
+    ]
+  },
+  {
+    "ticket_id": "101006455433",
+    "cell_id": "c_116_94",
+    "opened_at": "2026-04-25T16:19:12-04:00",
+    "age_days": 38.82,
+    "cause_label": "grading_capacity",
+    "note_blank": false,
+    "status_label": "Capacity or grading issue",
+    "priority_score": 1.7889,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 1.0,
+        "contribution": 0.35
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.3146,
+        "contribution": 0.3775
+      },
+      {
+        "factor": "flood_area",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.07,
+        "contribution": 0.035
+      },
+      {
+        "factor": "age_days",
+        "value": 38.82,
+        "contribution": 0.7764
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006455433"
+    ]
+  },
+  {
+    "ticket_id": "101006407919",
+    "cell_id": "c_82_116",
+    "opened_at": "2026-05-08T00:43:12-04:00",
+    "age_days": 26.47,
+    "cause_label": "grading_capacity",
+    "note_blank": false,
+    "status_label": "Capacity or grading issue",
+    "priority_score": 1.7852,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 1.0,
+        "contribution": 0.35
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.4715,
+        "contribution": 0.5658
+      },
+      {
+        "factor": "flood_area",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 1.0,
+        "contribution": 0.25
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.18,
+        "contribution": 0.09
+      },
+      {
+        "factor": "age_days",
+        "value": 26.47,
+        "contribution": 0.5294
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006407919"
+    ]
+  },
+  {
+    "ticket_id": "101006637570",
+    "cell_id": "c_132_101",
+    "opened_at": "2026-05-26T23:02:24-04:00",
+    "age_days": 7.54,
+    "cause_label": "grading_capacity",
+    "note_blank": false,
+    "status_label": "Capacity or grading issue",
+    "priority_score": 1.7337,
+    "factors": [
+      {
+        "factor": "past_storm_reports",
+        "value": 3.0,
+        "contribution": 1.05
+      },
+      {
+        "factor": "clog_risk",
+        "value": 0.2024,
+        "contribution": 0.2429
+      },
+      {
+        "factor": "flood_area",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "ej_block_group",
+        "value": 0.0,
+        "contribution": 0.0
+      },
+      {
+        "factor": "tree_density",
+        "value": 0.58,
+        "contribution": 0.29
+      },
+      {
+        "factor": "age_days",
+        "value": 7.54,
+        "contribution": 0.1508
+      }
+    ],
+    "evidence_ticket_ids": [
+      "101006637570",
+      "101006645489",
+      "101006653408"
+    ]
+  }
+]

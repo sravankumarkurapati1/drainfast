@@ -1,0 +1,550 @@
+{
+  "date": "2026-06-04",
+  "forecast_rain_in": 1.6,
+  "high_tide_flag": true,
+  "crews": 2,
+  "capacity_per_crew": 30,
+  "items": [
+    {
+      "rank": 1,
+      "cell_id": "c_172_132",
+      "lat": 42.374959,
+      "lon": -71.039022,
+      "priority_score": 3.4097,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 4.0,
+          "contribution": 1.4
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.8164,
+          "contribution": 0.9797
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 1.0,
+          "contribution": 0.25
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.16,
+          "contribution": 0.08
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "4 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006487109",
+        "101006495028",
+        "101006502947",
+        "101006510866"
+      ]
+    },
+    {
+      "rank": 2,
+      "cell_id": "c_180_143",
+      "lat": 42.382145,
+      "lon": -71.025658,
+      "priority_score": 3.1361,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 4.0,
+          "contribution": 1.4
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.5009,
+          "contribution": 0.6011
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 1.0,
+          "contribution": 0.25
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.37,
+          "contribution": 0.185
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "4 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006542542",
+        "101006550461",
+        "101006558380",
+        "101006566299"
+      ]
+    },
+    {
+      "rank": 3,
+      "cell_id": "c_167_137",
+      "lat": 42.370467,
+      "lon": -71.032948,
+      "priority_score": 3.1046,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 3.0,
+          "contribution": 1.05
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.8038,
+          "contribution": 0.9646
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 1.0,
+          "contribution": 0.25
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.28,
+          "contribution": 0.14
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "3 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006518785",
+        "101006526704",
+        "101006534623"
+      ]
+    },
+    {
+      "rank": 4,
+      "cell_id": "c_142_38",
+      "lat": 42.348009,
+      "lon": -71.153225,
+      "priority_score": 3.01,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 4.0,
+          "contribution": 1.4
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.6042,
+          "contribution": 0.725
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 0.0,
+          "contribution": 0.0
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.37,
+          "contribution": 0.185
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "4 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006788031",
+        "101006795950",
+        "101006803869",
+        "101006811788"
+      ]
+    },
+    {
+      "rank": 5,
+      "cell_id": "c_149_54",
+      "lat": 42.354298,
+      "lon": -71.133787,
+      "priority_score": 2.8654,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 4.0,
+          "contribution": 1.4
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.7587,
+          "contribution": 0.9104
+        },
+        {
+          "factor": "flood_area",
+          "value": 0.0,
+          "contribution": 0.0
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 0.0,
+          "contribution": 0.0
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.51,
+          "contribution": 0.255
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "4 past storm reports nearby; high predicted clog risk",
+      "evidence_ticket_ids": [
+        "101006756355",
+        "101006764274",
+        "101006772193",
+        "101006780112"
+      ]
+    },
+    {
+      "rank": 6,
+      "cell_id": "c_101_114",
+      "lat": 42.311179,
+      "lon": -71.060891,
+      "priority_score": 2.7393,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 2.0,
+          "contribution": 0.7
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.7161,
+          "contribution": 0.8593
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 1.0,
+          "contribution": 0.25
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.46,
+          "contribution": 0.23
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "2 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006415838",
+        "101006423757"
+      ]
+    },
+    {
+      "rank": 7,
+      "cell_id": "c_39_62",
+      "lat": 42.255483,
+      "lon": -71.124067,
+      "priority_score": 2.7135,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 2.0,
+          "contribution": 0.7
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.6821,
+          "contribution": 0.8185
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 1.0,
+          "contribution": 0.25
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.49,
+          "contribution": 0.245
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "2 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006708841",
+        "101006716760"
+      ]
+    },
+    {
+      "rank": 8,
+      "cell_id": "c_126_123",
+      "lat": 42.333636,
+      "lon": -71.049957,
+      "priority_score": 2.6769,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 2.0,
+          "contribution": 0.7
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.8849,
+          "contribution": 1.0619
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 0.0,
+          "contribution": 0.0
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.43,
+          "contribution": 0.215
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "2 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006597975",
+        "101006605894"
+      ]
+    },
+    {
+      "rank": 9,
+      "cell_id": "c_58_88",
+      "lat": 42.272551,
+      "lon": -71.092479,
+      "priority_score": 2.6664,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 2.0,
+          "contribution": 0.7
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.7762,
+          "contribution": 0.9314
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 1.0,
+          "contribution": 0.25
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.17,
+          "contribution": 0.085
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "2 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006463352",
+        "101006471271"
+      ]
+    },
+    {
+      "rank": 10,
+      "cell_id": "c_131_131",
+      "lat": 42.338128,
+      "lon": -71.040237,
+      "priority_score": 2.6005,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 3.0,
+          "contribution": 1.05
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.6254,
+          "contribution": 0.7505
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 0.0,
+          "contribution": 0.0
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.2,
+          "contribution": 0.1
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "3 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006613813",
+        "101006621732",
+        "101006629651"
+      ]
+    },
+    {
+      "rank": 11,
+      "cell_id": "c_132_101",
+      "lat": 42.339026,
+      "lon": -71.076685,
+      "priority_score": 2.5261,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 3.0,
+          "contribution": 1.05
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.7384,
+          "contribution": 0.8861
+        },
+        {
+          "factor": "flood_area",
+          "value": 0.0,
+          "contribution": 0.0
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 0.0,
+          "contribution": 0.0
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.58,
+          "contribution": 0.29
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "3 past storm reports nearby; high predicted clog risk",
+      "evidence_ticket_ids": [
+        "101006637570",
+        "101006645489",
+        "101006653408"
+      ]
+    },
+    {
+      "rank": 12,
+      "cell_id": "c_103_98",
+      "lat": 42.312975,
+      "lon": -71.08033,
+      "priority_score": 2.4876,
+      "factors": [
+        {
+          "factor": "past_storm_reports",
+          "value": 3.0,
+          "contribution": 1.05
+        },
+        {
+          "factor": "clog_risk",
+          "value": 0.3647,
+          "contribution": 0.4376
+        },
+        {
+          "factor": "flood_area",
+          "value": 1.0,
+          "contribution": 0.4
+        },
+        {
+          "factor": "ej_block_group",
+          "value": 1.0,
+          "contribution": 0.25
+        },
+        {
+          "factor": "tree_density",
+          "value": 0.1,
+          "contribution": 0.05
+        },
+        {
+          "factor": "forecast_rain",
+          "value": 1.6,
+          "contribution": 0.3
+        }
+      ],
+      "reason": "3 past storm reports nearby; inside the 9-inch flood extent",
+      "evidence_ticket_ids": [
+        "101006431676",
+        "101006439595",
+        "101006447514"
+      ]
+    }
+  ],
+  "fallback_mode": false
+}

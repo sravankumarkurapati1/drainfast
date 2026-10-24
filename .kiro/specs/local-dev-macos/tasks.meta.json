@@ -1,0 +1,373 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Move app files with `git mv` (ask the user before running; skip this task if approval is withheld)": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299441
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879304915
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879358078
+      }
+    ],
+    "2.1 Add test tooling to `frontend/package.json`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299556
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879361704
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879548587
+      }
+    ],
+    "2.2 Create `frontend/vite.helpers.ts`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299597
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879362506
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879549702
+      }
+    ],
+    "2.5 Rewrite `frontend/vite.config.ts`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299638
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879629089
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879765745
+      }
+    ],
+    "3.1 Create bundled fixtures": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299668
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879363648
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879550534
+      }
+    ],
+    "3.2 Implement `frontend/src/api/client.ts`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299705
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879629996
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879765863
+      }
+    ],
+    "4.1 Implement the source registry and badge": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299831
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879364819
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879551760
+      }
+    ],
+    "4.3 Wire the client and badge into `frontend/src/App.tsx`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299877
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879917384
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879920716
+      },
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880135404
+      },
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880308001
+      }
+    ],
+    "5.1 Create `frontend/.env.example`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299906
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879365672
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879552473
+      }
+    ],
+    "6. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299962
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879917427
+      },
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880308873
+      },
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880358557
+      }
+    ],
+    "7.1 Create `scripts/lib.sh`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879299988
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879558356
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879625525
+      }
+    ],
+    "7.2 Create `scripts/setup.sh`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879300023
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879631134
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879767110
+      }
+    ],
+    "7.3 Create `scripts/dev.sh`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879300054
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879632289
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879776775
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879904954
+      }
+    ],
+    "7.4 Create `scripts/prod_local.sh`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879300085
+      },
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879633111
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879768377
+      }
+    ],
+    "7.5 Make the scripts executable": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879300114
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879917454
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879921459
+      },
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880130200
+      }
+    ],
+    "8.1 Add the \"Run locally\" section to `README.md`": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879300145
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879777094
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879905820
+      }
+    ],
+    "9. Final checkpoint - Local verification on macOS": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879300178
+      },
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879917480
+      },
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880359392
+      },
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880435799
+      }
+    ],
+    "1. Step 0: Move the root Vite app into `frontend/` (REQUIRES USER APPROVAL)": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879358108
+      }
+    ],
+    "5. Frontend env file": [
+      {
+        "executionId": "0bfa533c-bc57-4063-a2ec-eff9fa2fb27e",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879552517
+      }
+    ],
+    "2. Frontend test tooling and Vite config": [
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879765789
+      }
+    ],
+    "3. API client and fixtures": [
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879765906
+      }
+    ],
+    "8. README": [
+      {
+        "executionId": "cd29b453-33eb-421e-972f-51c3f654fe5b",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792879905861
+      }
+    ],
+    "7. Scripts": [
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880130253
+      }
+    ],
+    "4. Demo badge and app wiring": [
+      {
+        "executionId": "1aab6a47-2258-4299-a12c-d0b5408a8ce2",
+        "chatSessionId": "sess_5ec21e19-d1c7-48c5-bf34-bb923f2039f5",
+        "timestamp": 1792880308038
+      }
+    ]
+  }
+}
