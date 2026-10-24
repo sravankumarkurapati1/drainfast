@@ -15,15 +15,19 @@ inclusion: always
 - Deploy: Docker image for the API; static build for the frontend.
 
 ## Data sources
-- Boston 311 service requests: data.boston.gov yearly CSVs plus field codebook.
+- Boston 311, old-system export from data.boston.gov (yearly CSVs: case_enquiry_id,
+  open_dt, closed_dt, case_status, closure_reason, case_title, type, latitude,
+  longitude, neighborhood).
 - Hourly rainfall, Boston Logan: NOAA NCEI or Iowa Environmental Mesonet.
-- Rain forecast: National Weather Service API (api.weather.gov). Always send a
-  User-Agent header identifying DrainFast, as the NWS requires.
-- Tides: NOAA gauge 8443970.
+- Tides, NOAA station 8443970: history for backtests, live predictions for the brief.
+- Rain forecast: National Weather Service API (api.weather.gov), with a User-Agent
+  header identifying DrainFast.
+- Boston catch basins: location and owner.
 - Environmental justice block groups: MassGIS.
-- Storage: raw downloads in data/raw/ and processed files in data/processed/
-  (both gitignored). A small committed snapshot lives in data/demo/ so the app runs
-  for judges without downloads.
+- Climate Ready Boston flood areas.
+- Street trees: optional.
+- Storage: data/raw/ and data/processed/ are gitignored; data/demo/ is a small
+  committed snapshot so the app runs for judges.
 
 ## Hard rules
 1. Numbers come from code. The LLM may explain or classify, but every count, rate,
@@ -43,6 +47,13 @@ inclusion: always
    and (b) co-pilot explanations. Keep prompts in .txt files next to the code that
    uses them. Validate every LLM label against the CauseLabel enum; anything invalid
    becomes "unclear".
+8. Cells are roughly 100 m grid squares, and the same coordinates always map to the
+   same cell_id.
+9. A storm day has 1 inch or more of rain at Boston Logan (configurable).
+10. Priority scores are a sum of named factor contributions, returned with the score
+    so the UI can show the breakdown.
+11. MCP tools (forecast, tide, cell history) and API endpoints call the same Python
+    functions. Logic is never duplicated between them.
 
 ## Python conventions
 - Type hints on every function. Prefer small, pure functions; no global mutable state.
@@ -66,14 +77,16 @@ inclusion: always
 
 ## Testing rules
 - Tests live in tests/<module>/ and run offline with DRAINFAST_FALLBACK=1.
-- Use Hypothesis for invariants: label values are always valid, no ticket is lost in
-  the pipeline or in duplicate merging, no future data in features, rankings are
-  deterministic, every brief item has evidence, new work orders are pending_approval.
+- Use Hypothesis for these invariants: no data dated on or after a test storm is
+  used in features or training; every brief and backlog item has at least one
+  evidence ticket ID; rankings are identical for identical inputs; every cause
+  label is one of the four allowed values.
 - make test must pass before any pull request.
 
 ## Commands
 - make data      build processed data from data/raw
-- make train     train the risk model
+- make storms    mark storm days and build the heavy-rain trend
+- make train     build features and the risk score
 - make backtest  run the backtest against both baselines
 - make api       start the FastAPI server
 - make web       start the frontend dev server

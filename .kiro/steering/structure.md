@@ -8,7 +8,7 @@ inclusion: always
 drainfast/
 ├── .kiro/                 steering, specs, hooks, MCP settings (never gitignored)
 ├── contracts/             shared schemas, paths, OpenAPI spec, fixtures (frozen)
-├── data_pipeline/         ingest 311, label causes, locations, duplicate pairs
+├── data_pipeline/         ingest 311, label causes, cells, duplicate pairs
 ├── model/                 storm days, features, training, ranking
 ├── evaluation/            backtest, baselines, equity metrics, dedupe evaluation
 ├── backend/               FastAPI app, triage, work orders, co-pilot, fallback
@@ -31,8 +31,8 @@ task belongs to.
 
 | Owner | Folders |
 |---|---|
-| A (data) | data_pipeline/, tests/data_pipeline/, .kiro/specs/01-data-pipeline/ |
-| B (model) | model/, evaluation/, tests/model/, .kiro/specs/02-risk-model/ |
+| A (data) | data_pipeline/, tests/data_pipeline/, .kiro/specs/01-ingest-and-labels/ |
+| B (model) | model/, evaluation/, tests/model/, .kiro/specs/02-risk-model-backtest/ |
 | C (backend, lead) | backend/, mcp_server/, tests/backend/, .kiro/specs/03-api-copilot/, .kiro/settings/mcp.json, Dockerfile, Makefile |
 | D (frontend) | frontend/, .kiro/specs/04-frontend/, README.md, docs/kiro-writeup.md |
 | Everyone (frozen) | contracts/, tests/contracts/, the three shared steering files |
@@ -44,7 +44,8 @@ contracts ← data_pipeline ← model and evaluation ← backend ← frontend (o
 - data_pipeline writes files to the paths in contracts.paths. It never imports from
   model, evaluation or backend. It exposes label_report(text) in
   data_pipeline/labeler.py for the backend to reuse.
-- model exposes rank_locations and explain_location in model/service.py.
+- model exposes rank_cells(as_of, forecast_rain_in, crews, capacity_per_crew),
+  rank_backlog(as_of) and explain_cell(cell_id, as_of) in model/service.py.
 - evaluation exposes backtest and equity_view in evaluation/service.py.
 - backend imports those public functions only, never private helpers.
   Nothing imports from backend.
@@ -56,6 +57,7 @@ contracts ← data_pipeline ← model and evaluation ← backend ← frontend (o
 - React components: PascalCase.tsx in frontend/src/components/.
 - Hooks: .kiro/hooks/<owner letter>-<name>.json (for example b-backtest.json).
 - Module steering: .kiro/steering/<module>-rules.md with a fileMatch pattern.
+- Extra specs for a module start with that module's number (01*, 02*, 03*, 04*).
 
 ## Dependencies
 - Each Python module has its own requirements.txt. The root requirements.txt only
