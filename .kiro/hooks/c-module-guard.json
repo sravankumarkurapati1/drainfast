@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Module ownership guard",
+      "trigger": "PreToolUse",
+      "description": "Stops the agent from editing frozen contracts or another owner's module.",
+      "matcher": "fs_write|str_replace|fs_append|write|edit",
+      "action": {
+        "type": "agent",
+        "prompt": "Before this write: check the target path against .kiro/steering/structure.md ownership. If it is inside contracts/ or tests/contracts/ and this is not a \"contract:\" task, or it is in another owner's module (A data_pipeline/, B model/ evaluation/, C backend/ mcp_server/ Makefile Dockerfile requirements.txt, D frontend/), stop and tell the user which owner must make the change instead of writing it."
+      }
+    }
+  ]
+}

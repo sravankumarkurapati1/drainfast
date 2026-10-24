@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "drainfast-data": {
+      "command": ".venv/bin/python",
+      "args": ["-m", "mcp_server.server"],
+      "env": { "DRAINFAST_CONTACT": "drainfast-hackathon@example.edu" },
+      "disabled": false,
+      "autoApprove": ["rain_forecast", "tide_outlook", "cell_history"]
+    }
+  }
+}

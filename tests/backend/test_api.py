@@ -1,0 +1,48 @@
+"""API tests in fallback mode, running on contracts/fixtures (empty data/demo)."""
+from fastapi.testclient import TestClient
+
+from backend.app import app
+from mcp_server.server import TOOLS, run_tool
+
+client = TestClient(app)
+
+
+def test_health_reports_fallback(empty_demo_dir):
+    assert client.get("/health").json() == {"status": "ok", "fallback": True}
+
+
+def test_brief_evidence_on_fixtures(empty_demo_dir):
+    r = client.get("/brief", params={"date": "2099-01-01", "crews": 2})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["fallback_mode"] is True and body["forecast_rain_in"] == 1.0
+    assert all(item["evidence_ticket_ids"] for item in body["items"])
+
+
+def test_backlog_evidence_and_status_unclear(empty_demo_dir):
+    items = client.get("/backlog", params={"limit": 50}).json()
+    assert all(i["evidence_ticket_ids"] for i in items)
+    assert all(i["status_label"] == "Status unclear" for i in items if i["note_blank"])
+
+
+def test_validation_error_detail_is_a_string(empty_demo_dir):
+    r = client.get("/brief", params={"date": "not-a-date", "crews": 0})
+    assert r.status_code == 422 and isinstance(r.json()["detail"], str)
+
+
+def test_unknown_cell_is_404(empty_demo_dir):
+    r = client.get("/cells/c_0_0/history")
+    assert r.status_code == 404 and isinstance(r.json()["detail"], str)
+
+
+def test_backtest_and_rain_trend_load(empty_demo_dir):
+    assert client.get("/backtest").status_code == 200
+    assert client.get("/rain-trend").status_code == 200
+
+
+def test_mcp_tools_share_backend_functions(empty_demo_dir):
+    assert {t.name for t in TOOLS} == {"rain_forecast", "tide_outlook", "cell_history"}
+    assert run_tool("rain_forecast", {"date": "2026-11-01"})["fallback"] is True
+    cid = client.get("/backlog").json()[0]["cell_id"]
+    hist = run_tool("cell_history", {"cell_id": cid})
+    assert hist["total_reports"] == len(client.get(f"/cells/{cid}/history").json())

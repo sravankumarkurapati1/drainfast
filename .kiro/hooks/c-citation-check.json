@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Citation check",
+      "trigger": "PostFileSave",
+      "description": "After a backend Python file is saved, run the evidence property tests: every brief and backlog item must cite at least one 311 ticket ID.",
+      "matcher": "backend/.*\\.py$",
+      "action": {
+        "type": "command",
+        "command": "cd \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\" && DRAINFAST_FALLBACK=1 \"$( [ -x .venv/bin/python ] && echo .venv/bin/python || echo python )\" -m pytest tests/backend -q -k evidence -p no:warnings",
+        "timeout": 120
+      }
+    }
+  ]
+}
