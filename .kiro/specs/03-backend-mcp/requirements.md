@@ -27,7 +27,7 @@ priority score, crew brief and backlog, and serves the frontend build. It matche
 1. WHEN `rain_forecast(day)` is called, THE Sources SHALL fetch `api.weather.gov/points/42.3601,-71.0589`, follow `forecastGridData`, read `quantitativePrecipitation` (millimetres over ISO 8601 durations), and return the inches that fall within that local Boston date.
 2. THE Sources SHALL send a User-Agent built from the `DRAINFAST_CONTACT` environment variable on every NWS request.
 3. THE Sources SHALL reuse a forecast result for the same date for 30 minutes.
-4. WHEN `tide_outlook(day)` is called, THE Sources SHALL fetch NOAA CO-OPS predictions for station 8443970 (datum MLLW, units english, time_zone lst_ldt, interval hilo) and set `high_tide_flag` when the day's maximum exceeds the threshold in `data/demo/tide_threshold.json`.
+4. WHEN `tide_outlook(day)` is called, THE Sources SHALL fetch NOAA CO-OPS predictions for station 8443970 (datum MLLW, units english, time_zone lst_ldt, interval hilo) and set `high_tide_flag` when the day's maximum exceeds the threshold in `data/demo/tide_threshold.json`, or, until that file exists, the 95th percentile of daily maximum levels in `data/raw/tide/`.
 5. WHEN `cell_history(cell_id)` is called, THE Sources SHALL return that cell's reports newest first, with the count of all reports and of `clogged_basin` reports.
 6. IF a network call fails or Fallback_Mode is on, THEN THE Sources SHALL return a result with `fallback=true` and SHALL NOT raise.
 
@@ -54,6 +54,7 @@ priority score, crew brief and backlog, and serves the frontend build. It matche
 5. THE Backend SHALL give each item a one-sentence plain-language reason built from its two largest factors.
 6. THE Backend SHALL attach up to 5 evidence ticket IDs per item: the most recent `clogged_basin` tickets, otherwise the most recent reports, all opened before the brief date.
 7. THE Backend SHALL exclude cells with no tickets, so that every item has at least one evidence ticket ID.
+8. WHERE `forecast_rain_in` is given (0 to 30 inches), THE Backend SHALL use it instead of the forecast or recorded rain for that date (contract PR #3).
 
 ### Requirement 5: Backlog, history, backtest, rain trend, health
 

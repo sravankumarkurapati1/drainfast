@@ -5,7 +5,7 @@ Run: make api  (uvicorn backend.app:app --reload --port 8000)
 import logging
 from datetime import date, datetime
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Optional
 from zoneinfo import ZoneInfo
 
 from fastapi import FastAPI, HTTPException, Path as PathParam, Query, Request
@@ -44,18 +44,22 @@ def _today() -> date:
     return datetime.now(BOSTON).date()
 
 
-def _weather_for(day: date) -> tuple[float, bool, bool]:
+def _weather_for(day: date, rain_override: Optional[float] = None) -> tuple[float, bool, bool]:
     """(rain_in, high_tide, fallback_mode) for a brief date.
 
     Past dates use the recorded storm day (no record means 0 in and no high tide).
     Today and later use the live forecast; if it is unavailable, 1.0 in and fallback_mode.
+    A rain_override (forecast_rain_in) replaces the rain for any date; tide is unchanged.
     """
     if day < _today():
         storms, _ = store.load_storms()
         rec = next((s for s in storms if s.storm_day == day), None)
-        return (rec.rain_total_in, rec.high_tide_flag, False) if rec else (0.0, False, False)
-    rain = sources.rain_forecast(day)
+        rain_in, tide_flag = (rec.rain_total_in, rec.high_tide_flag) if rec else (0.0, False)
+        return (rain_in if rain_override is None else rain_override), tide_flag, False
     tide = sources.tide_outlook(day)
+    if rain_override is not None:
+        return rain_override, tide.high_tide_flag, False
+    rain = sources.rain_forecast(day)
     if rain.fallback or rain.rain_in is None:
         return float(weights()["brief_defaults"]["fallback_rain_in"]), tide.high_tide_flag, True
     return rain.rain_in, tide.high_tide_flag, False
@@ -72,9 +76,11 @@ def get_brief(
     date: Annotated[date, Query(description="Brief date (YYYY-MM-DD)")],
     crews: Annotated[int, Query(ge=1)],
     capacity_per_crew: Annotated[int, Query(ge=1)] = 30,
+    forecast_rain_in: Annotated[Optional[float], Query(ge=0, le=30,
+                                description="Optional rain override in inches (contract PR #3)")] = None,
 ) -> BriefResponse:
     """Ranked cells to clear first, filling crews x capacity_per_crew basins."""
-    rain_in, high_tide, fallback_mode = _weather_for(date)
+    rain_in, high_tide, fallback_mode = _weather_for(date, forecast_rain_in)
     reports, _ = store.load_reports()
     cells, _ = store.load_cells()
     scores, _ = model_adapter.score(reports, date, rain_in, high_tide, use_model=not fallback_on())

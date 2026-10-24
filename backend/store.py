@@ -15,6 +15,7 @@ import pandas as pd
 from pydantic import ValidationError
 
 from backend.config import demo_dir, fixtures_dir
+from contracts.paths import RAW_DIR
 from contracts.schemas import BacktestResult, Cell, ContractModel, RainTrendPoint, Report, Storm
 
 log = logging.getLogger(__name__)
@@ -111,12 +112,11 @@ def load_rain_trend() -> tuple[list[RainTrendPoint], bool]:
     return _load("rain_trend.json", "rain_trend_point.json", RainTrendPoint)
 
 
-def tide_threshold_ft() -> Optional[float]:
-    """High-tide threshold in feet MLLW from data/demo/tide_threshold.json, or None.
+TIDE_RAW_FILE = ("tide", "boston_tide_hourly.csv")
+TIDE_PERCENTILE = 0.95
 
-    Accepts a bare number or an object with one numeric field whose name contains
-    "threshold" (the model owner picks the key).
-    """
+
+def _threshold_from_file() -> Optional[float]:
     path = demo_dir() / "tide_threshold.json"
     try:
         data = json.loads(path.read_text())
@@ -129,3 +129,34 @@ def tide_threshold_ft() -> Optional[float]:
             if "threshold" in k and isinstance(v, (int, float)):
                 return float(v)
     return None
+
+
+@lru_cache(maxsize=1)
+def _threshold_from_raw(path: str, mtime: float) -> Optional[float]:
+    """95th percentile of daily maximum water level (ft MLLW) from the raw tide history."""
+    try:
+        df = pd.read_csv(path, usecols=["t", "v"])
+        levels = pd.to_numeric(df["v"], errors="coerce")
+        daily_max = levels.groupby(df["t"].str[:10]).max().dropna()
+        return round(float(daily_max.quantile(TIDE_PERCENTILE)), 3) if len(daily_max) else None
+    except Exception as e:
+        log.warning("could not compute tide threshold from %s: %s", path, e)
+        return None
+
+
+def tide_threshold_ft() -> Optional[float]:
+    """High-tide threshold in feet MLLW.
+
+    Prefers data/demo/tide_threshold.json (written by the model owner: a bare number, or
+    an object with a numeric field whose name contains "threshold"). Until that file
+    exists, uses the same definition as the V1 plan, the 95th percentile of daily
+    maximum levels, computed from data/raw/tide. Returns None if neither is available.
+    """
+    value = _threshold_from_file()
+    if value is not None:
+        return value
+    raw = RAW_DIR.joinpath(*TIDE_RAW_FILE)
+    if not raw.exists():
+        return None
+    log.info("tide_threshold.json missing; using the 95th percentile of %s", raw)
+    return _threshold_from_raw(str(raw), raw.stat().st_mtime)

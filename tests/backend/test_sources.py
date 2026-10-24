@@ -63,3 +63,11 @@ def test_tide_outlook_flag_uses_threshold(monkeypatch, empty_demo_dir):
                              {"t": "2026-11-05 16:10", "v": "0.4", "type": "L"}]}
     out = sources.tide_outlook(date(2026, 11, 5), fetch=lambda *_a: preds)
     assert out.high_tide_flag is True and out.max_ft_mllw == 11.9 and out.fallback is False
+
+
+def test_tide_threshold_falls_back_to_raw_history(empty_demo_dir):
+    from backend.store import tide_threshold_ft
+    value = tide_threshold_ft()  # no tide_threshold.json in the empty demo dir
+    assert value is not None and 8.0 < value < 16.0
+    (empty_demo_dir / "tide_threshold.json").write_text("11.0")
+    assert tide_threshold_ft() == 11.0  # the model owner's file wins

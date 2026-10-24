@@ -46,3 +46,12 @@ def test_mcp_tools_share_backend_functions(empty_demo_dir):
     cid = client.get("/backlog").json()[0]["cell_id"]
     hist = run_tool("cell_history", {"cell_id": cid})
     assert hist["total_reports"] == len(client.get(f"/cells/{cid}/history").json())
+
+
+def test_brief_rain_override(empty_demo_dir):
+    future = client.get("/brief", params={"date": "2099-01-01", "crews": 2, "forecast_rain_in": 2.5}).json()
+    assert future["forecast_rain_in"] == 2.5
+    past = client.get("/brief", params={"date": "2024-01-11", "crews": 2, "forecast_rain_in": 0.3}).json()
+    assert past["forecast_rain_in"] == 0.3
+    bad = client.get("/brief", params={"date": "2099-01-01", "crews": 2, "forecast_rain_in": -1})
+    assert bad.status_code == 422

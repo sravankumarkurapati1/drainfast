@@ -19,8 +19,12 @@
 - MCP: `drainfast-data` server (rain_forecast, tide_outlook, cell_history), the same functions the API uses.
 - Custom agents: `.kiro/agents/drainfast-pr-reviewer.md` (run before each merge), `.kiro/agents/drainfast-contract-checker.md` (API vs openapi.yaml, demo files vs schemas).
 
+## Follow-ups done
+- Kiro CLI (second tool): `make test` (21 passed) and the drainfast-data MCP forecast question, both run through `kiro-cli`. Transcripts are in `docs/build-log/kiro-cli-runs.md`.
+- Contract PR #3: optional `forecast_rain_in` on `GET /brief`. The backend already supports it.
+- High-tide flag: until B's `tide_threshold.json` exists, the backend uses the 95th percentile of daily highs from `data/raw/tide` (12.177 ft MLLW).
+- Security decision: the API has no authentication on purpose. It is read-only, serves only public 311, NOAA and NWS data, and the rules require judges to use the live link free and without restriction. CORS allows GET only from FRONTEND_ORIGIN. No secrets are exposed: Bedrock is off in the deployed container (DRAINFAST_FALLBACK=1).
+
 ## Open items
 - Swap the local contract stand-ins for the real contracts/schemas.py once merged, then re-run `make test`.
-- Ask Kiro "Using drainfast-data, what's tomorrow's rain forecast and tide outlook?" and screenshot it.
-- Run `make test` once through the Kiro CLI.
-- Contract gap: `GET /brief` has no `forecast_rain_in` override parameter.
+- Optional: an IDE screenshot of the same MCP question for the write-up.
