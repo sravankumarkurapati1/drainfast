@@ -14,3 +14,28 @@ export function relativeDay(isoDate: string, now = new Date()): string {
 export function isStormForecast(forecastIn: number): boolean {
   return forecastIn >= STORM_DAY_THRESHOLD_IN
 }
+
+/** Where the brief's rain number comes from. */
+export type RainSource = 'forecast' | 'unavailable' | 'whatif' | 'past'
+
+/** Tomorrow's local date as 'YYYY-MM-DD' (the default brief date). */
+export function tomorrowIso(now = new Date()): string {
+  return todayIso(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1))
+}
+
+/**
+ * Classify the rain behind a brief. A what-if override wins; past dates use recorded rain;
+ * future dates in fallback mode use the default planning rain, which is not a forecast.
+ */
+export function rainSourceFor(briefDate: string, fallbackMode: boolean, hasOverride: boolean, now = new Date()): RainSource {
+  if (hasOverride) return 'whatif'
+  if (briefDate < todayIso(now)) return 'past'
+  return fallbackMode ? 'unavailable' : 'forecast'
+}
+
+export const RAIN_LABEL: Record<RainSource, string> = {
+  forecast: 'Forecast rain',
+  unavailable: 'Planning rain (default)',
+  whatif: 'What-if rain',
+  past: 'Recorded rain',
+}

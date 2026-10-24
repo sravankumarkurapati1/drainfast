@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { getBacklog, getBacktest, getBrief, getCells, getHealth, getRainTrend } from './api/client'
 import { BacklogView } from './components/BacklogView'
 import { BacktestTable, RainTrendChart } from './components/BacktestView'
@@ -9,7 +9,7 @@ import { LoadState } from './components/LoadState'
 import { LogoMark, Wordmark } from './components/Logo'
 import { MapView } from './components/MapView'
 import { StormBanner } from './components/StormBanner'
-import { todayIso } from './components/labels'
+import { rainSourceFor, tomorrowIso } from './components/storm'
 import { DataSourceProvider } from './data/DataSourceContext'
 import { showDemoBadge } from './data/sources'
 import { useApi } from './data/useApi'
@@ -61,12 +61,32 @@ function PanelHead({ title, subtitle, children }: { title: string; subtitle: str
 
 function Dashboard() {
   const [tab, setTab] = useState<TabId>('brief')
-  const [date, setDate] = useState(todayIso)
+  const [date, setDate] = useState(() => tomorrowIso())
   const [crews, setCrews] = useState(DEFAULT_CREWS)
   const [capacity, setCapacity] = useState(DEFAULT_CAPACITY)
   // '' = use the live forecast; a number = what-if rain override (forecast_rain_in).
   const [rainOverride, setRainOverride] = useState('')
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+
+  // Bumped to reload every dataset: when the tab regains focus, the network comes back,
+  // or once a minute. A backend restart (e.g. fallback mode turned off) then shows up
+  // without a manual page reload. Previous data stays on screen while reloading.
+  const [refresh, setRefresh] = useState(0)
+  useEffect(() => {
+    const bump = () => {
+      if (document.visibilityState === 'visible') setRefresh((n) => n + 1)
+    }
+    window.addEventListener('focus', bump)
+    window.addEventListener('online', bump)
+    document.addEventListener('visibilitychange', bump)
+    const timer = window.setInterval(bump, 60_000)
+    return () => {
+      window.removeEventListener('focus', bump)
+      window.removeEventListener('online', bump)
+      document.removeEventListener('visibilitychange', bump)
+      window.clearInterval(timer)
+    }
+  }, [])
 
   const fetchBrief = useCallback(
     (signal: AbortSignal) =>
@@ -79,13 +99,19 @@ function Dashboard() {
         },
         { signal },
       ),
-    [date, crews, capacity, rainOverride],
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
+    [date, crews, capacity, rainOverride, refresh],
   )
-  const fetchHealth = useCallback((signal: AbortSignal) => getHealth({ signal }), [])
-  const fetchCells = useCallback((signal: AbortSignal) => getCells({ signal }), [])
-  const fetchBacklog = useCallback((signal: AbortSignal) => getBacklog(undefined, { signal }), [])
-  const fetchBacktest = useCallback((signal: AbortSignal) => getBacktest({ signal }), [])
-  const fetchRain = useCallback((signal: AbortSignal) => getRainTrend({ signal }), [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
+  const fetchHealth = useCallback((signal: AbortSignal) => getHealth({ signal }), [refresh])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
+  const fetchCells = useCallback((signal: AbortSignal) => getCells({ signal }), [refresh])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
+  const fetchBacklog = useCallback((signal: AbortSignal) => getBacklog(undefined, { signal }), [refresh])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
+  const fetchBacktest = useCallback((signal: AbortSignal) => getBacktest({ signal }), [refresh])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- refresh forces a reload
+  const fetchRain = useCallback((signal: AbortSignal) => getRainTrend({ signal }), [refresh])
 
   // Health has no view; it only reports whether the live API answered (feeds the demo badge).
   useApi('health', fetchHealth)
@@ -100,6 +126,11 @@ function Dashboard() {
     [brief.data, backlog.data],
   )
   const neighborhoods = useNeighborhoods(cellIds, cells.data)
+  const rainSource = rainSourceFor(
+    brief.data?.date ?? date,
+    brief.data?.fallback_mode ?? false,
+    rainOverride !== '',
+  )
 
   // Arrow/Home/End keys move between tabs (WAI-ARIA tabs pattern).
   const onTabKey = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -242,8 +273,8 @@ function Dashboard() {
                   {controls}
                 </PanelHead>
                 <LoadState label="Morning brief" {...brief} hasData={brief.data !== undefined} />
-                {brief.data && <StormBanner brief={brief.data} />}
-                {brief.data && <BriefView brief={brief.data} neighborhoods={neighborhoods} />}
+                {brief.data && <StormBanner brief={brief.data} source={rainSource} />}
+                {brief.data && <BriefView brief={brief.data} neighborhoods={neighborhoods} source={rainSource} />}
               </>
             )}
 
@@ -253,7 +284,7 @@ function Dashboard() {
                   {controls}
                 </PanelHead>
                 <LoadState label="Morning brief" {...brief} hasData={brief.data !== undefined} />
-                {brief.data && <StormBanner brief={brief.data} />}
+                {brief.data && <StormBanner brief={brief.data} source={rainSource} />}
                 {brief.data && (
                   <MapView items={brief.data.items} cells={cells.data ?? []} neighborhoods={neighborhoods} />
                 )}

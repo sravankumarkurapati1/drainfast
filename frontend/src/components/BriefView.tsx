@@ -1,23 +1,29 @@
 import type { BriefResponse } from '../api/types'
 import { factorLabel, formatContribution, topFactors } from './labels'
 import { Stat } from './Stat'
-import { isStormForecast } from './storm'
+import { isStormForecast, RAIN_LABEL, type RainSource } from './storm'
 
 interface Props {
   brief: BriefResponse
   neighborhoods: Map<string, string>
+  source: RainSource
 }
 
-export function BriefView({ brief, neighborhoods }: Props) {
+export function BriefView({ brief, neighborhoods, source }: Props) {
+  const storm = isStormForecast(brief.forecast_rain_in)
   const maxScore = Math.max(...brief.items.map((i) => i.priority_score), 0) || 1
   const capacity = brief.crews * brief.capacity_per_crew
 
   return (
     <>
       <dl className="stats">
-        <Stat label="Forecast rain" icon="rain" tone="sky">
+        <Stat label={RAIN_LABEL[source]} icon="rain" tone="sky">
           {brief.forecast_rain_in.toFixed(2)} in
-          <small>{isStormForecast(brief.forecast_rain_in) ? 'Storm day (1 in or more)' : 'Below storm threshold'}</small>
+          <small>{source === 'unavailable'
+            ? 'Default, not a forecast'
+            : storm
+              ? 'Storm day (1 in or more)'
+              : 'Below storm threshold'}</small>
         </Stat>
         <Stat label="High tide" icon="tide" tone="indigo">
           {brief.high_tide_flag ? 'Yes' : 'No'}
@@ -31,7 +37,7 @@ export function BriefView({ brief, neighborhoods }: Props) {
         </Stat>
         <Stat label="Cells ranked" icon="target" tone="coral">
           {brief.items.length}
-          <small>{brief.fallback_mode ? 'Fallback mode (no AI)' : `Brief for ${brief.date}`}</small>
+          <small>{brief.fallback_mode ? 'Fallback mode' : `Brief for ${brief.date}`}</small>
         </Stat>
       </dl>
 
@@ -41,7 +47,7 @@ export function BriefView({ brief, neighborhoods }: Props) {
         <div className="table-wrap">
           <table>
             <caption>
-              {isStormForecast(brief.forecast_rain_in)
+              {storm
                 ? 'Cells to clear before the storm, highest priority at the top'
                 : 'No storm expected: cells ranked for routine cleaning, highest priority at the top'}
             </caption>
