@@ -15,7 +15,7 @@ import pandas as pd
 from pydantic import ValidationError
 
 from backend.config import demo_dir, fixtures_dir
-from contracts.paths import RAW_DIR
+from backend.paths import RAW_DIR
 from contracts.schemas import BacktestResult, Cell, ContractModel, RainTrendPoint, Report, Storm
 
 log = logging.getLogger(__name__)
@@ -38,12 +38,20 @@ def _clean(value: Any) -> Any:
 
 
 def _validate_rows(rows: list[dict[str, Any]], model: type[M], source: str) -> list[M]:
-    """Validate each row; skip and log invalid ones so one bad row never breaks the app."""
+    """Validate each row against the contract model; skip and log invalid ones.
+
+    Columns that are not contract fields (pipeline extras such as `exclude` or
+    `bwsc_share`) are dropped before validation, because contract models forbid extras.
+    """
     out: list[M] = []
     bad = 0
+    fields = set(model.model_fields)
+    extras = sorted({k for row in rows[:1] for k in row} - fields)
+    if extras:
+        log.info("%s: ignoring non-contract columns %s", source, extras)
     for row in rows:
         try:
-            out.append(model.model_validate({k: _clean(v) for k, v in row.items()}))
+            out.append(model.model_validate({k: _clean(v) for k, v in row.items() if k in fields}))
         except ValidationError as e:
             bad += 1
             if bad <= 3:
@@ -68,8 +76,14 @@ def _read_file(path: Path) -> Optional[list[dict[str, Any]]]:
 
 
 @lru_cache(maxsize=32)
-def _load_cached(demo_path: str, mtime: float, fixture_name: str, model: type[M]) -> tuple[tuple[M, ...], bool]:
+def _load_cached(demo_path: str, mtime: float, fixture_name: str, model: type[M],
+                 drop_excluded: bool) -> tuple[tuple[M, ...], bool]:
     rows = _read_file(Path(demo_path))
+    if rows is not None and drop_excluded:
+        kept = [r for r in rows if not bool(_clean(r.get("exclude")) or False)]
+        if len(kept) != len(rows):
+            log.info("%s: dropped %d rows marked exclude", demo_path, len(rows) - len(kept))
+        rows = kept
     if rows is not None:
         items = _validate_rows(rows, model, demo_path)
         if items:
@@ -79,17 +93,19 @@ def _load_cached(demo_path: str, mtime: float, fixture_name: str, model: type[M]
     return tuple(_validate_rows(_read_file(fixture) or [], model, str(fixture))), True
 
 
-def _load(demo_name: str, fixture_name: str, model: type[M]) -> tuple[list[M], bool]:
+def _load(demo_name: str, fixture_name: str, model: type[M],
+          drop_excluded: bool = False) -> tuple[list[M], bool]:
     """Return (items, used_fixture) for one demo file."""
     path = demo_dir() / demo_name
     mtime = path.stat().st_mtime if path.exists() else -1.0
-    items, used_fixture = _load_cached(str(path), mtime, fixture_name, model)
+    items, used_fixture = _load_cached(str(path), mtime, fixture_name, model, drop_excluded)
     return list(items), used_fixture
 
 
 def load_reports() -> tuple[list[Report], bool]:
-    """All storm-related 311 reports (data/demo/reports.parquet)."""
-    return _load("reports.parquet", "report.json", Report)
+    """Storm-related 311 reports (data/demo/reports.parquet), without rows the pipeline
+    marked `exclude` (test, invalid, wrong e-form or duplicate cases)."""
+    return _load("reports.parquet", "report.json", Report, drop_excluded=True)
 
 
 def load_cells() -> tuple[list[Cell], bool]:

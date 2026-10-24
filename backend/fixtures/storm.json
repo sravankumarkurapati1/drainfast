@@ -1,0 +1,20 @@
+[
+  {
+    "storm_day": "2023-12-18",
+    "rain_total_in": 1.35,
+    "max_hourly_in": 0.16,
+    "high_tide_flag": false
+  },
+  {
+    "storm_day": "2024-01-10",
+    "rain_total_in": 1.52,
+    "max_hourly_in": 0.4,
+    "high_tide_flag": true
+  },
+  {
+    "storm_day": "2025-03-17",
+    "rain_total_in": 1.1,
+    "max_hourly_in": 0.3,
+    "high_tide_flag": false
+  }
+]

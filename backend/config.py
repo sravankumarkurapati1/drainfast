@@ -6,7 +6,7 @@ from typing import Any
 
 import yaml
 
-from contracts.paths import DEMO_DIR, FIXTURES_DIR
+from backend.paths import DEMO_DIR, FIXTURES_DIR
 
 WEIGHTS_PATH = Path(__file__).resolve().parent / "weights.yaml"
 
