@@ -18,3 +18,8 @@ fallback_model:
 brief_defaults:
   fallback_rain_in: 1.0    # used when the forecast is unavailable
   max_evidence: 5
+# When the pre-storm brief turns on (GET /outlook). Team-set; flood reports roughly
+# double on days with 0.5 in or more compared with dry days.
+storm:
+  threshold_in: 0.5        # a forecast day with this much rain or more is a storm
+  lookahead_days: 3        # brief turns on when the next storm is within this many days

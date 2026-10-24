@@ -78,3 +78,11 @@ of 10.786 ft MLLW staying below the 12.177 ft threshold.
   a bad edit.
 - It read the same `.kiro/` folder (MCP config) as the IDE, so no setup was needed.
 - Good for scripted checks before a merge. The IDE is better for specs and reviewing diffs.
+
+## Pre-storm look-ahead (GET /outlook)
+- Design change: the forecast decides *when* the brief shows; the model decides *which* spots go first.
+- `GET /outlook` reads the full NWS forecast (about 7 days) once, finds the next day with 0.5 in or more, and turns the brief on when that storm is within 3 days. Both values are in `backend/weights.yaml` (`storm.threshold_in`, `storm.lookahead_days`). Messages: "No storm in the forecast. Routine cleaning continues." or "Storm expected Thursday, about 1.5 in. Check these locations first, by Wednesday."
+- Rain was removed from the per-location factors in `/brief`. It is the same for every spot, so it is shown once (`forecast_rain_in`). The model's rain term is a constant shift, so the ranking is unchanged.
+- Live check on 2026-10-24: NWS shows 8 dry days, so the outlook reports no storm. 66 tests pass, including 7 new outlook tests.
+- Pitch wording: on past storms, the spots in the pre-storm list accounted for X% of the cleaned-basin reports that came in. The backtest shows where reports happened, not that checking those spots would have prevented them; a pilot would measure that.
+- `/outlook` is backend-local and not yet in contracts/openapi.yaml; it needs a "contract:" note.

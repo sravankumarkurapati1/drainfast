@@ -112,6 +112,21 @@ def rain_in_on_day(values: list[dict[str, Any]], day: date) -> float:
 
 
 _rain_cache: dict[str, tuple[float, RainForecast]] = {}
+_grid_cache: dict[str, tuple[float, list[dict[str, Any]]]] = {}
+
+
+def _grid_values(fetch: FetchJson) -> list[dict[str, Any]]:
+    """NWS quantitativePrecipitation values for Boston (about 7 days), cached 30 minutes.
+
+    Raises one of NETWORK_ERRORS on failure; callers turn that into fallback=True.
+    """
+    hit = _grid_cache.get("boston")
+    if hit and time.monotonic() - hit[0] < CACHE_SECONDS:
+        return hit[1]
+    grid_url = fetch(NWS_POINT, None)["properties"]["forecastGridData"]
+    values = fetch(grid_url, None)["properties"]["quantitativePrecipitation"]["values"]
+    _grid_cache["boston"] = (time.monotonic(), values)
+    return values
 
 
 def rain_forecast(day: date, fetch: FetchJson = _http_json) -> RainForecast:
@@ -126,14 +141,58 @@ def rain_forecast(day: date, fetch: FetchJson = _http_json) -> RainForecast:
     if hit and time.monotonic() - hit[0] < CACHE_SECONDS:
         return hit[1]
     try:
-        grid_url = fetch(NWS_POINT, None)["properties"]["forecastGridData"]
-        values = fetch(grid_url, None)["properties"]["quantitativePrecipitation"]["values"]
-        result = RainForecast(key, rain_in_on_day(values, day), False)
+        result = RainForecast(key, rain_in_on_day(_grid_values(fetch), day), False)
     except NETWORK_ERRORS as e:
         log.warning("rain_forecast failed for %s: %s", key, e)
         return RainForecast(key, None, True, note=f"forecast unavailable: {type(e).__name__}")
     _rain_cache[key] = (time.monotonic(), result)
     return result
+
+
+@dataclass
+class StormOutlook:
+    """Next storm in the forecast and whether the pre-storm brief should be on."""
+    today: str
+    threshold_in: float
+    lookahead_days: int
+    days: list[dict[str, Any]]          # [{"date": "YYYY-MM-DD", "rain_in": float}], today onward
+    next_storm: Optional[dict[str, Any]]  # first day with rain_in >= threshold, or None
+    brief_active: bool                  # next storm falls within lookahead_days of today
+    check_by: Optional[str]             # the day before the storm (or today if the storm is today)
+    fallback: bool
+    source: str = "api.weather.gov"
+    note: str = ""
+
+
+def storm_outlook(today: date, threshold_in: float, lookahead_days: int,
+                  fetch: FetchJson = _http_json) -> StormOutlook:
+    """Daily forecast rain for the NWS forecast window (about 7 days) and the next storm.
+
+    A storm day has rain_in >= threshold_in. The brief turns on only when the next
+    storm is within lookahead_days of today (today counts as day 0). On any failure,
+    or in fallback mode, returns fallback=True with no storm and brief_active False.
+    """
+    def empty(note: str) -> StormOutlook:
+        return StormOutlook(today.isoformat(), threshold_in, lookahead_days, [], None, False, None, True, note=note)
+
+    if fallback_on():
+        return empty("DRAINFAST_FALLBACK=1")
+    try:
+        values = _grid_values(fetch)
+        last = max(datetime.fromisoformat(v["validTime"].split("/")[0]).astimezone(BOSTON).date()
+                   for v in values)
+    except NETWORK_ERRORS as e:
+        log.warning("storm_outlook failed: %s", e)
+        return empty(f"forecast unavailable: {type(e).__name__}")
+    days = [{"date": (today + timedelta(d)).isoformat(),
+             "rain_in": rain_in_on_day(values, today + timedelta(d))}
+            for d in range((last - today).days + 1)]
+    storm = next((d for d in days if d["rain_in"] >= threshold_in), None)
+    active = storm is not None and (date.fromisoformat(storm["date"]) - today).days <= lookahead_days
+    check_by = None
+    if storm is not None:
+        check_by = max(today, date.fromisoformat(storm["date"]) - timedelta(days=1)).isoformat()
+    return StormOutlook(today.isoformat(), threshold_in, lookahead_days, days, storm, active, check_by, False)
 
 
 def tide_outlook(day: date, fetch: FetchJson = _http_json) -> TideOutlook:

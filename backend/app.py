@@ -66,6 +66,62 @@ def _weather_for(day: date, rain_override: Optional[float] = None) -> tuple[floa
     return rain.rain_in, tide.high_tide_flag, False
 
 
+class ForecastDay(BaseModel):
+    date: date
+    rain_in: float
+
+
+class OutlookResponse(BaseModel):
+    """Next storm in the NWS forecast and whether the pre-storm brief should show.
+
+    Backend-local (not yet in contracts/openapi.yaml): needs a "contract:" PR.
+    """
+    today: date
+    threshold_in: float
+    lookahead_days: int
+    days: list[ForecastDay]
+    next_storm: Optional[ForecastDay]
+    brief_active: bool
+    check_by: Optional[date]
+    fallback: bool
+    message: str
+
+
+def _weekday(d: date) -> str:
+    """'Thursday' for a date."""
+    return d.strftime("%A")
+
+
+@app.get("/outlook", response_model=OutlookResponse, operation_id="get_outlook")
+def get_outlook() -> OutlookResponse:
+    """Look ahead over the forecast: next storm, and whether to show the brief.
+
+    The forecast decides when to show the list; the model (via /brief) decides which
+    spots go first. Threshold and lookahead come from backend/weights.yaml.
+    """
+    cfg = weights()["storm"]
+    today = _today()
+    o = sources.storm_outlook(today, float(cfg["threshold_in"]), int(cfg["lookahead_days"]))
+    storm = ForecastDay(**o.next_storm) if o.next_storm else None
+    if o.fallback:
+        message = "Forecast unavailable. Pick a date or enter expected rain to see the brief."
+    elif storm is None:
+        message = "No storm in the forecast. Routine cleaning continues."
+    elif not o.brief_active:
+        message = (f"Next storm: {_weekday(storm.date)}, about {storm.rain_in:.1f} in. "
+                   f"The brief turns on {o.lookahead_days} days before.")
+    else:
+        when = "today" if storm.date == today else _weekday(storm.date)
+        by = "now" if o.check_by == today.isoformat() else f"by {_weekday(date.fromisoformat(o.check_by))}"
+        message = (f"Storm expected {when}, about {storm.rain_in:.1f} in. "
+                   f"Check these locations first, {by}.")
+    return OutlookResponse(today=today, threshold_in=o.threshold_in, lookahead_days=o.lookahead_days,
+                           days=[ForecastDay(**d) for d in o.days], next_storm=storm,
+                           brief_active=o.brief_active,
+                           check_by=date.fromisoformat(o.check_by) if o.check_by else None,
+                           fallback=o.fallback, message=message)
+
+
 @app.get("/health", response_model=HealthResponse, operation_id="get_health")
 def get_health() -> HealthResponse:
     """Liveness and whether fallback mode is on."""
