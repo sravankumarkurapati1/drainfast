@@ -1,4 +1,4 @@
-"""Load pipeline outputs from data/demo/, falling back to contracts/fixtures/.
+"""Load pipeline outputs from data/demo/, falling back to backend/fixtures/.
 
 Each loader returns validated contract models. A missing or unreadable demo file never
 stops the API: the matching fixture is used instead and `used_fixture` is logged.
@@ -19,6 +19,8 @@ from backend.paths import RAW_DIR
 from contracts.schemas import BacktestResult, Cell, ContractModel, RainTrendPoint, Report, Storm
 
 log = logging.getLogger(__name__)
+# Unreadable or malformed files (pyarrow errors subclass ValueError or OSError).
+READ_ERRORS = (OSError, ValueError, KeyError, TypeError)
 M = TypeVar("M", bound=ContractModel)
 
 
@@ -82,7 +84,7 @@ def _read_file(path: Path) -> Optional[list[dict[str, Any]]]:
             if len(records) == 1:
                 return records[0]
         return None
-    except Exception as e:  # unreadable file: fall back, never crash
+    except READ_ERRORS as e:  # unreadable file: fall back, never crash
         log.warning("could not read %s: %s", path, e)
         return None
 
@@ -90,6 +92,7 @@ def _read_file(path: Path) -> Optional[list[dict[str, Any]]]:
 @lru_cache(maxsize=32)
 def _load_cached(demo_path: str, mtime: float, fixture_name: str, model: type[M],
                  drop_excluded: bool) -> tuple[tuple[M, ...], bool]:
+    """Read and validate one demo file (cached by path and mtime); fixture if unusable."""
     rows = _read_file(Path(demo_path))
     if rows is not None and drop_excluded:
         kept = [r for r in rows if not bool(_clean(r.get("exclude")) or False)]
@@ -145,10 +148,14 @@ TIDE_PERCENTILE = 0.95
 
 
 def _threshold_from_file() -> Optional[float]:
+    """Threshold from data/demo/tide_threshold.json, or None if missing or unreadable."""
     path = demo_dir() / "tide_threshold.json"
+    if not path.exists():
+        return None
     try:
         data = json.loads(path.read_text())
-    except Exception:
+    except READ_ERRORS as e:
+        log.warning("could not read %s: %s", path, e)
         return None
     if isinstance(data, (int, float)):
         return float(data)
@@ -167,7 +174,7 @@ def _threshold_from_raw(path: str, mtime: float) -> Optional[float]:
         levels = pd.to_numeric(df["v"], errors="coerce")
         daily_max = levels.groupby(df["t"].str[:10]).max().dropna()
         return round(float(daily_max.quantile(TIDE_PERCENTILE)), 3) if len(daily_max) else None
-    except Exception as e:
+    except READ_ERRORS as e:
         log.warning("could not compute tide threshold from %s: %s", path, e)
         return None
 

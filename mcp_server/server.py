@@ -45,16 +45,19 @@ def run_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
 
 @server.list_tools()
 async def list_tools() -> list[types.Tool]:
+    """The three DrainFast data tools."""
     return TOOLS
 
 
 @server.call_tool()
 async def call_tool(name: str, arguments: dict[str, Any] | None) -> list[types.TextContent]:
+    """Run one tool in a worker thread and return its JSON result as text."""
     result = await asyncio.to_thread(run_tool, name, arguments or {})
     return [types.TextContent(type="text", text=json.dumps(result, default=str))]
 
 
 async def main() -> None:
+    """Serve the tools over stdio."""
     async with stdio_server() as (read, write):
         await server.run(read, write, server.create_initialization_options())
 

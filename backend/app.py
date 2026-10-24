@@ -41,6 +41,7 @@ async def _validation_error(_: Request, exc: RequestValidationError) -> JSONResp
 
 
 def _today() -> date:
+    """Today's date in Boston."""
     return datetime.now(BOSTON).date()
 
 

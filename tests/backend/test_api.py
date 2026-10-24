@@ -1,4 +1,4 @@
-"""API tests in fallback mode, running on contracts/fixtures (empty data/demo)."""
+"""API tests in fallback mode, running on backend/fixtures (empty data/demo)."""
 from fastapi.testclient import TestClient
 
 from backend.app import app

@@ -1,4 +1,4 @@
-"""Environment settings and weights for the backend. Read at call time, never cached globally."""
+"""Environment settings (read at call time) and priority weights (loaded once)."""
 import os
 from functools import lru_cache
 from pathlib import Path

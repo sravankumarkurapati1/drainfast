@@ -94,7 +94,7 @@ Build the DrainFast V1 backend (owner C): settings and weights, demo-file loader
     - Official MCP SDK over stdio; tools `rain_forecast`, `tide_outlook`, `cell_history` calling `backend.sources` only
     - _Requirements: 2.1, 2.2_
   - [x] 9.2 Register MCP server in .kiro/settings/mcp.json (verified over stdio: 3 tools, live and fallback)
-  - [x] 9.3 Ask Kiro for tomorrow's forecast through drainfast-data (Kiro CLI transcript in docs/build-log/kiro-cli-runs.md; IDE screenshot still optional)
+  - [x] 9.3 Ask Kiro for tomorrow's forecast through drainfast-data (Kiro CLI transcript in docs/build-log/c.md (Kiro CLI transcripts); IDE screenshot still optional)
     - _Requirements: 2.1, 2.2_
 
 - [ ] 10. Final checkpoint - Ensure all tests pass

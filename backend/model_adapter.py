@@ -53,12 +53,14 @@ def is_rain_factor(f: FactorContribution) -> bool:
 
 
 def _rows(result: Any) -> Iterable[dict[str, Any]]:
+    """Rows of a DataFrame or a list of dicts/objects as dicts."""
     if hasattr(result, "to_dict"):
         return result.to_dict(orient="records")
     return [r if isinstance(r, dict) else vars(r) for r in result]
 
 
 def _contributions(row: dict[str, Any]) -> list[tuple[str, float]]:
+    """(feature, contribution) pairs from any supported row layout."""
     c = row.get("contributions")
     if isinstance(c, dict):
         return [(k, float(v)) for k, v in c.items()]
@@ -138,6 +140,7 @@ def _model_scores(as_of: date, rain_in: float, high_tide: bool, data_mtime: floa
 
 
 def _demo_mtime() -> float:
+    """Latest mtime of the files the model reads, used as a cache key."""
     files = [demo_dir() / n for n in ("reports.parquet", "cells.parquet", "model.joblib")]
     return max((f.stat().st_mtime for f in files if f.exists()), default=-1.0)
 
@@ -156,6 +159,6 @@ def score(reports: list[Report], as_of: date, rain_in: float, high_tide: bool,
             log.warning("model.service.score_cells returned no usable rows; using fallback scorer")
         except ImportError:
             log.info("model.service not available yet; using fallback scorer")
-        except Exception as e:
-            log.warning("model.service.score_cells failed (%s); using fallback scorer", e)
+        except Exception:  # isolation boundary: a model bug must never take the API down
+            log.exception("model.service.score_cells failed; using fallback scorer")
     return fallback_scores(reports, as_of, rain_in), True

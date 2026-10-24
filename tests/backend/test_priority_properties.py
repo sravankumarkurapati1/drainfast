@@ -7,7 +7,7 @@ from hypothesis import strategies as st
 from backend.model_adapter import fallback_scores
 from backend.priority import build_backlog, build_brief
 from contracts.schemas import FACTOR_SUM_TOLERANCE, BriefResponse, ReportStatus
-from tests.backend.strategies import cells, report, reports
+from strategies import cells, report, reports
 
 days = st.dates(min_value=date(2016, 1, 1), max_value=date(2026, 12, 31))
 crews = st.integers(1, 4)

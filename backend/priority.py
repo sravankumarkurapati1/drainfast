@@ -16,6 +16,7 @@ BWSC_SHARE = {BasinOwner.BWSC: 1.0, BasinOwner.Mixed: 0.5}
 
 
 def _day(dt: datetime) -> date:
+    """Calendar date of a timestamp in its own time zone."""
     return dt.date()
 
 
@@ -40,12 +41,18 @@ def total(factors: list[FactorContribution]) -> float:
     return sum(f.contribution for f in factors)
 
 
+def _phrase(f: FactorContribution) -> str:
+    """'past clogged-drain reports (8)'; yes/no flags without a number; acronyms kept."""
+    name = f.factor if f.factor[:2].isupper() else f.factor[0].lower() + f.factor[1:]
+    return name if f.value in (0.0, 1.0) and "report" not in name.lower() else f"{name} ({f.value:g})"
+
+
 def reason_for(factors: list[FactorContribution]) -> str:
     """One plain-language sentence from the two largest positive factors."""
     top = sorted((f for f in factors if f.contribution > 0), key=lambda f: (-f.contribution, f.factor))[:2]
     if not top:
         return "Ranked by past 311 reports at this location."
-    parts = [f"{f.factor.lower()} ({f.value:g})" for f in top]
+    parts = [_phrase(f) for f in top]
     return "Ranked high mainly because of " + " and ".join(parts) + "."
 
 
@@ -59,6 +66,7 @@ def evidence_for(cell_reports: list[Report], before: date, limit: int) -> list[s
 
 
 def _by_cell(reports: list[Report]) -> dict[str, list[Report]]:
+    """Group reports by cell_id."""
     out: dict[str, list[Report]] = {}
     for r in reports:
         out.setdefault(r.cell_id, []).append(r)
@@ -66,6 +74,7 @@ def _by_cell(reports: list[Report]) -> dict[str, list[Report]]:
 
 
 def _lat_lon(cell_id: str, cell: Optional[Cell], reports: list[Report]) -> tuple[float, float]:
+    """Map position: the cell record, else the grid center, else the first report."""
     if cell:
         return cell.lat, cell.lon
     try:

@@ -24,6 +24,8 @@ COOPS = "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter"
 TIDE_STATION = "8443970"
 CACHE_SECONDS = 30 * 60
 MM_PER_INCH = 25.4
+# Failures that mean "no forecast right now": network, HTTP status, or an unexpected payload.
+NETWORK_ERRORS = (httpx.HTTPError, OSError, KeyError, IndexError, TypeError, ValueError)
 
 FetchJson = Callable[[str, Optional[dict[str, str]]], Any]
 
@@ -127,7 +129,7 @@ def rain_forecast(day: date, fetch: FetchJson = _http_json) -> RainForecast:
         grid_url = fetch(NWS_POINT, None)["properties"]["forecastGridData"]
         values = fetch(grid_url, None)["properties"]["quantitativePrecipitation"]["values"]
         result = RainForecast(key, rain_in_on_day(values, day), False)
-    except Exception as e:
+    except NETWORK_ERRORS as e:
         log.warning("rain_forecast failed for %s: %s", key, e)
         return RainForecast(key, None, True, note=f"forecast unavailable: {type(e).__name__}")
     _rain_cache[key] = (time.monotonic(), result)
@@ -153,7 +155,7 @@ def tide_outlook(day: date, fetch: FetchJson = _http_json) -> TideOutlook:
         preds = fetch(COOPS, params)["predictions"]
         highs = [{"time": p["t"], "ft_mllw": float(p["v"])} for p in preds if p.get("type") == "H"]
         max_ft = max(float(p["v"]) for p in preds)
-    except Exception as e:
+    except NETWORK_ERRORS as e:
         log.warning("tide_outlook failed for %s: %s", key, e)
         return TideOutlook(key, None, threshold, False, True, note=f"tide unavailable: {type(e).__name__}")
     flag = threshold is not None and max_ft > threshold
