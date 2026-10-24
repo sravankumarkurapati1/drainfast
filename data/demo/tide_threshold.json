@@ -1,0 +1,9 @@
+{
+  "threshold_ft": 12.177,
+  "percentile": 95.0,
+  "datum": "MLLW",
+  "station": "8443970",
+  "n_days": 5381,
+  "first_day": "2012-01-01",
+  "last_day": "2026-09-30"
+}

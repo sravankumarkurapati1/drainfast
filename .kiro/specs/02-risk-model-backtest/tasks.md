@@ -1,0 +1,24 @@
+# Implementation Plan: 02-risk-model-backtest
+
+- [x] 1. Storm days in `model/storms.py`
+  - `load_hourly_rain`, `hourly_totals`, `daily_rain`, `build_storm_table`, `validate_storms`
+  - _Requirements: 1.1-1.5_
+- [x] 2. Tide threshold in `model/tide.py`
+  - _Requirements: 2.1-2.3_
+- [x] 3. Rain trend in `model/trend.py`
+  - _Requirements: 3.1-3.4_
+- [x] 4. Features in `model/features.py`
+  - `prepare_reports`, `load_reports`, `build_features`
+  - _Requirements: 4.1, 5.1, 5.2_
+- [x] 5. Training and service
+  - `model/train.py` label window, trainable storms, `fit_model`
+  - `model/service.py` `score_cells` with contributions and `base_rate`
+  - _Requirements: 4.2, 4.3, 6.1-6.4_
+- [x] 6. Backtest in `model/backtest.py` and CLI `python -m model.run [--quick]`
+  - _Requirements: 7.1-7.5_
+- [x] 7. Property tests in `tests/model/test_model.py`
+  - [x] 7.1 No future data (Property 1)
+  - [x] 7.2 Identical inputs give identical rankings (Property 2)
+  - [x] 7.3 Hit rates between 0 and 1 (Property 3)
+  - _Requirements: 8.1_
+- [x] 8. Verify: `make model` writes all five files; `make backtest-quick` under 30 s
