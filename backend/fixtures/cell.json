@@ -1,0 +1,35 @@
+[
+  {
+    "cell_id": "c_168_132",
+    "lat": 42.37136543298598,
+    "lon": -71.0390223767955,
+    "neighborhood": "East Boston",
+    "basin_count": 6,
+    "basin_owner": "BWSC",
+    "ej_flag": true,
+    "flood_area_flag": true,
+    "tree_density": null
+  },
+  {
+    "cell_id": "c_89_111",
+    "lat": 42.30039885016169,
+    "lon": -71.06453581141659,
+    "neighborhood": "Dorchester",
+    "basin_count": 3,
+    "basin_owner": "Mixed",
+    "ej_flag": true,
+    "flood_area_flag": false,
+    "tree_density": null
+  },
+  {
+    "cell_id": "c_133_73",
+    "lat": 42.3399245418613,
+    "lon": -71.11070297882618,
+    "neighborhood": "Jamaica Plain",
+    "basin_count": 4,
+    "basin_owner": "BWSC",
+    "ej_flag": false,
+    "flood_area_flag": false,
+    "tree_density": null
+  }
+]

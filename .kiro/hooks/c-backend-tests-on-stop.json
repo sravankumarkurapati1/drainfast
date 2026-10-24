@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Backend tests when agent finishes",
+      "trigger": "Stop",
+      "description": "When an agent run ends with uncommitted backend changes, run the backend tests offline in fallback mode.",
+      "action": {
+        "type": "command",
+        "command": "cd \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\" && if git status --porcelain -- backend mcp_server tests/backend | grep -q .; then DRAINFAST_FALLBACK=1 \"$( [ -x .venv/bin/python ] && echo .venv/bin/python || echo python )\" -m pytest tests/backend -q -p no:warnings; fi",
+        "timeout": 180
+      }
+    }
+  ]
+}
