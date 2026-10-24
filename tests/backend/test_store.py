@@ -1,4 +1,6 @@
 """store.py must accept pipeline files that carry extra, non-contract columns."""
+import json
+
 import pandas as pd
 
 from backend import store
@@ -6,7 +8,8 @@ from backend.paths import FIXTURES_DIR
 
 
 def _fixture_frame(name: str) -> pd.DataFrame:
-    return pd.read_json(FIXTURES_DIR / name)
+    # Read as plain objects so ticket IDs stay strings, as in the pipeline's parquet.
+    return pd.DataFrame(json.loads((FIXTURES_DIR / name).read_text()))
 
 
 def test_extra_columns_are_ignored_and_excluded_rows_dropped(empty_demo_dir):
