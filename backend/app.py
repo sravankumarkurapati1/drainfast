@@ -62,6 +62,12 @@ def _weather_for(day: date, rain_override: Optional[float] = None) -> tuple[floa
         return rain_override, tide.high_tide_flag, False
     rain = sources.rain_forecast(day)
     if rain.fallback or rain.rain_in is None:
+        if not fallback_on():
+            # Live mode never invents rain: say the forecast is unavailable instead.
+            raise HTTPException(status_code=503, detail=(
+                "Live rain forecast unavailable from the National Weather Service. "
+                "Try again in a minute, or enter the expected rain."))
+        # Explicit offline mode (DRAINFAST_FALLBACK=1, tests only): assumed rain, flagged.
         return float(weights()["brief_defaults"]["fallback_rain_in"]), tide.high_tide_flag, True
     return rain.rain_in, tide.high_tide_flag, False
 

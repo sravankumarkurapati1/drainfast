@@ -55,3 +55,17 @@ def test_brief_rain_override(empty_demo_dir):
     assert past["forecast_rain_in"] == 0.3
     bad = client.get("/brief", params={"date": "2099-01-01", "crews": 2, "forecast_rain_in": -1})
     assert bad.status_code == 422
+
+
+def test_live_mode_never_invents_rain(monkeypatch):
+    """With fallback off and NWS down, /brief for an upcoming date says so (503), no 1.0 in default."""
+    monkeypatch.setenv("DRAINFAST_FALLBACK", "0")
+    r = client.get("/brief", params={"date": "2099-01-01", "crews": 2})  # network is blocked in tests
+    assert r.status_code == 503 and "unavailable" in r.json()["detail"]
+    ok = client.get("/brief", params={"date": "2099-01-01", "crews": 2, "forecast_rain_in": 1.2})
+    assert ok.status_code == 200 and ok.json()["forecast_rain_in"] == 1.2
+
+
+def test_live_mode_never_serves_sample_data(monkeypatch, empty_demo_dir):
+    monkeypatch.setenv("DRAINFAST_FALLBACK", "0")
+    assert client.get("/backtest").json() == []  # missing file -> empty, not fixtures
