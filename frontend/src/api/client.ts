@@ -1,8 +1,7 @@
 // The single entry point for runtime HTTP from the app (local-dev-macos Req 3.1-3.6).
 // Requests go to VITE_API_URL + path, or to a relative '/path' when VITE_API_URL is blank.
-// Network errors, timeouts and 5xx fall back to bundled fixtures; 4xx is surfaced as an error.
+// Live API only: network errors, timeouts, 5xx and 4xx are surfaced as errors (no sample data).
 import type { DataSource } from '../data/sources'
-import { fixtureFor } from './fixtures'
 import type {
   BacklogItem,
   BacktestResult,
@@ -73,12 +72,9 @@ export interface ApiGetOptions {
 
 export const DEFAULT_TIMEOUT_MS = 10_000
 
+/** Live API only: never substitute bundled sample data; surface the failure instead. */
 function fallback<T>(path: string, reason: string): ApiResult<T> {
-  const data = fixtureFor(path)
-  if (data === undefined) {
-    throw new ApiError('unreachable', `API unreachable (${reason}) and no sample data for ${path}`)
-  }
-  return { data: data as T, source: 'fixture' }
+  throw new ApiError('unreachable', `Live API unavailable for ${path} (${reason})`)
 }
 
 export async function apiGet<T>(path: string, opts: ApiGetOptions = {}): Promise<ApiResult<T>> {

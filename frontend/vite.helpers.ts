@@ -2,12 +2,12 @@
 // Keep this file free of node-only imports.
 
 /** Backend API paths proxied by the Vite dev server. */
-export const API_PATHS = ['/health', '/brief', '/backlog', '/cells', '/backtest', '/rain-trend'] as const
+export const API_PATHS = ['/health', '/brief', '/backlog', '/cells', '/backtest', '/rain-trend', '/outlook'] as const
 
 export type ApiPath = (typeof API_PATHS)[number]
 
 /** Matches an API path exactly, or as a prefix followed by '/' or '?'. */
-export const API_PATH_PATTERN = '^/(health|brief|backlog|cells|backtest|rain-trend)(?:[/?]|$)'
+export const API_PATH_PATTERN = '^/(health|brief|backlog|cells|backtest|rain-trend|outlook)(?:[/?]|$)'
 
 const API_PATH_REGEX = new RegExp(API_PATH_PATTERN)
 
