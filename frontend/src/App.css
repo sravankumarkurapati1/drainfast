@@ -1139,3 +1139,20 @@ path.halo {
   font-size: 0.8rem;
   color: var(--muted);
 }
+
+.storm-note {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

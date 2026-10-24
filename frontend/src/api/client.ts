@@ -10,6 +10,7 @@ import type {
   Cell,
   HealthResponse,
   RainTrendPoint,
+  Report,
 } from './types'
 
 export type { DataSource }
@@ -155,6 +156,8 @@ export interface BriefParams {
   crews?: number
   /** Minimum 1; backend default 30. */
   capacity_per_crew?: number
+  /** Optional rain override in inches, 0-30 (contract PR #3). Replaces the forecast. */
+  forecast_rain_in?: number
 }
 
 export interface BacklogParams {
@@ -176,3 +179,7 @@ export const getBacktest = (opts?: RequestOptions) => apiGet<BacktestResult[]>('
 
 export const getRainTrend = (opts?: RequestOptions) =>
   apiGet<RainTrendPoint[]>('/rain-trend', opts)
+
+/** A cell's reports, newest first. 404 for an unknown cell. No fixture exists for this path. */
+export const getCellHistory = (cellId: string, opts?: RequestOptions) =>
+  apiGet<Report[]>(`/cells/${encodeURIComponent(cellId)}/history`, opts)

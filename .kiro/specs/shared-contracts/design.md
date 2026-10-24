@@ -145,7 +145,7 @@ FIXTURES_DIR = PROJECT_ROOT / "contracts" / "fixtures"
 | Method | Path | Params | 200 schema | Error refs |
 |---|---|---|---|---|
 | GET | `/health` | none | HealthResponse | none |
-| GET | `/brief` | `date` (date, req), `crews` (integer, min 1, req), `capacity_per_crew` (integer, min 1, default 30, opt) | BriefResponse | 422 |
+| GET | `/brief` | `date` (date, req), `crews` (integer, min 1, req), `capacity_per_crew` (integer, min 1, default 30, opt), `forecast_rain_in` (number, min 0, max 30, opt; overrides forecast or recorded rain) | BriefResponse | 422 |
 | GET | `/backlog` | `limit` (integer, min 1, opt) | array of BacklogItem | 422 |
 | GET | `/cells/{cell_id}/history` | `cell_id` string | array of Report | 404, 422 |
 | GET | `/backtest` | none | array of BacktestResult | none |

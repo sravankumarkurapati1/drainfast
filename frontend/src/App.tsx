@@ -14,6 +14,7 @@ import { DataSourceProvider } from './data/DataSourceContext'
 import { showDemoBadge } from './data/sources'
 import { useApi } from './data/useApi'
 import { useDataSources } from './data/useDataSources'
+import { useNeighborhoods } from './data/useNeighborhoods'
 import './App.css'
 
 const TABS: ReadonlyArray<{ id: TabId; label: string; icon: IconName }> = [
@@ -63,11 +64,22 @@ function Dashboard() {
   const [date, setDate] = useState(todayIso)
   const [crews, setCrews] = useState(DEFAULT_CREWS)
   const [capacity, setCapacity] = useState(DEFAULT_CAPACITY)
+  // '' = use the live forecast; a number = what-if rain override (forecast_rain_in).
+  const [rainOverride, setRainOverride] = useState('')
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
   const fetchBrief = useCallback(
-    (signal: AbortSignal) => getBrief({ date, crews, capacity_per_crew: capacity }, { signal }),
-    [date, crews, capacity],
+    (signal: AbortSignal) =>
+      getBrief(
+        {
+          date,
+          crews,
+          capacity_per_crew: capacity,
+          forecast_rain_in: rainOverride === '' ? undefined : Number(rainOverride),
+        },
+        { signal },
+      ),
+    [date, crews, capacity, rainOverride],
   )
   const fetchHealth = useCallback((signal: AbortSignal) => getHealth({ signal }), [])
   const fetchCells = useCallback((signal: AbortSignal) => getCells({ signal }), [])
@@ -83,10 +95,11 @@ function Dashboard() {
   const backtest = useApi('backtest', fetchBacktest)
   const rain = useApi('rain-trend', fetchRain)
 
-  const neighborhoods = useMemo(
-    () => new Map((cells.data ?? []).map((c) => [c.cell_id, c.neighborhood])),
-    [cells.data],
+  const cellIds = useMemo(
+    () => [...(brief.data?.items ?? []).map((i) => i.cell_id), ...(backlog.data ?? []).map((b) => b.cell_id)],
+    [brief.data, backlog.data],
   )
+  const neighborhoods = useNeighborhoods(cellIds, cells.data)
 
   // Arrow/Home/End keys move between tabs (WAI-ARIA tabs pattern).
   const onTabKey = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -128,6 +141,25 @@ function Dashboard() {
           value={capacity}
           onChange={(e) => setCapacity(positiveInt(e.target.value, capacity))}
         />
+      </label>
+      <label>
+        Rain what-if (in)
+        <input
+          type="number"
+          min={0}
+          max={30}
+          step={0.1}
+          placeholder="Forecast"
+          value={rainOverride}
+          aria-describedby="rain-hint"
+          onChange={(e) => {
+            const v = e.target.value
+            if (v === '' || (Number(v) >= 0 && Number(v) <= 30)) setRainOverride(v)
+          }}
+        />
+        <span id="rain-hint" className="sr-only">
+          Leave blank to use the live forecast
+        </span>
       </label>
     </form>
   )

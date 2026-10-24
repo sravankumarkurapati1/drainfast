@@ -105,5 +105,7 @@ export interface RainTrendPoint {
 }
 
 export interface HealthResponse {
-  status: 'ok'
+  status: string
+  /** True when the API runs with DRAINFAST_FALLBACK=1 (no Bedrock, no live weather). */
+  fallback: boolean
 }

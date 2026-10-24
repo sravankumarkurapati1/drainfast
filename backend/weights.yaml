@@ -1,0 +1,20 @@
+# Priority weights (backend/priority.py). Each weight scales one named factor.
+# priority_score is always exactly the sum of the factor contributions.
+brief:
+  ej: 0.3                  # cell center inside an environmental-justice block group
+  flood_area: 0.4          # cell center inside the modeled 9 in stormwater flood area
+  high_tide_flood_area: 0.6  # high tide forecast AND cell in the flood area
+  bwsc_share: 0.2          # share of the cell's basins run by BWSC (crews can act)
+backlog:
+  age: 1.0                 # decays linearly from 1.0 (new case) to 0 at 365 days
+  age_horizon_days: 365
+# History-only fallback scorer, used when model.service is unavailable.
+fallback_model:
+  past_clogged: 1.0        # x log(1 + past clogged-drain reports)
+  past_other: 0.3          # x log(1 + other past reports)
+  recent_clogged: 0.5      # x log(1 + clogged-drain reports in the last 365 days)
+  rain_x_history: 0.4      # x rain inches x log(1 + past clogged-drain reports)
+  leaf_season: 0.3         # x log(1 + past clogged-drain reports) in Oct-Nov
+brief_defaults:
+  fallback_rain_in: 1.0    # used when the forecast is unavailable
+  max_evidence: 5

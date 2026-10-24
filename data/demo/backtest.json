@@ -1,0 +1,35 @@
+[
+  {
+    "storm_day": "2023-07-29",
+    "n_fixable_reports": 12,
+    "n_cells": 8818,
+    "hit_rate_top100": 0.16666666666666666,
+    "hit_rate_top200": 0.3333333333333333,
+    "random_top100": 0.011666666666666665,
+    "random_top200": 0.02125,
+    "most_complaints_top100": 0.16666666666666666,
+    "most_complaints_top200": 0.25
+  },
+  {
+    "storm_day": "2023-08-18",
+    "n_fixable_reports": 11,
+    "n_cells": 8818,
+    "hit_rate_top100": 0.09090909090909091,
+    "hit_rate_top200": 0.2727272727272727,
+    "random_top100": 0.009999999999999995,
+    "random_top200": 0.023636363636363626,
+    "most_complaints_top100": 0.09090909090909091,
+    "most_complaints_top200": 0.09090909090909091
+  },
+  {
+    "storm_day": "2024-01-09",
+    "n_fixable_reports": 17,
+    "n_cells": 8818,
+    "hit_rate_top100": 0.29411764705882354,
+    "hit_rate_top200": 0.47058823529411764,
+    "random_top100": 0.011176470588235293,
+    "random_top200": 0.024411764705882313,
+    "most_complaints_top100": 0.11764705882352941,
+    "most_complaints_top200": 0.17647058823529413
+  }
+]

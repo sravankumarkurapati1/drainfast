@@ -28,6 +28,11 @@ export function StormBanner({ brief }: { brief: BriefResponse }) {
             {brief.high_tide_flag ? ', with a high tide (coastal backup risk)' : ''}. Send crews to
             these {n} cells first, in rank order.
           </p>
+          {brief.fallback_mode && (
+            <p className="storm-text storm-note">
+              Fallback mode: live forecast unavailable, so this uses the default planning rain.
+            </p>
+          )}
         </div>
         <span className="storm-tag">Action needed</span>
       </section>
@@ -47,6 +52,9 @@ export function StormBanner({ brief }: { brief: BriefResponse }) {
           Below the {threshold} in storm threshold. No storm prep needed; the ranking below can guide
           routine cleaning.
         </p>
+        {brief.fallback_mode && (
+          <p className="storm-text storm-note">Fallback mode: live forecast unavailable.</p>
+        )}
       </div>
       <span className="storm-tag">Routine day</span>
     </section>

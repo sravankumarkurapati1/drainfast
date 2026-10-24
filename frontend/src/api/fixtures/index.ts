@@ -19,12 +19,10 @@ const FIXTURES: Record<string, unknown> = {
 
 /**
  * Return the fixture for an API path, or undefined when none exists.
- * The query string is ignored; a path matches an endpoint exactly or as a '/'-prefixed sub-path.
+ * The query string and trailing slashes are ignored; sub-paths such as /cells/{id}/history have no fixture.
  */
 export function fixtureFor(path: string): unknown | undefined {
-  const pathname = path.split('?', 1)[0]
-  for (const [apiPath, data] of Object.entries(FIXTURES)) {
-    if (pathname === apiPath || pathname.startsWith(apiPath + '/')) return data
-  }
-  return undefined
+  const pathname = path.split('?', 1)[0].replace(/\/+$/, '')
+  // Exact endpoint match only: '/cells/{id}/history' is a different shape than '/cells'.
+  return Object.prototype.hasOwnProperty.call(FIXTURES, pathname) ? FIXTURES[pathname] : undefined
 }
