@@ -230,7 +230,7 @@ The shared contracts are the single source of truth for every data shape, file p
 4. THE OpenAPI_Document SHALL define an `ErrorResponse` component schema with a required `detail` string field.
 5. THE OpenAPI_Document SHALL represent date fields and parameters as `type: string` with `format: date`, and datetime fields as `type: string` with `format: date-time`.
 6. THE OpenAPI_Document SHALL define `GET /health` with no parameters, returning a HealthResponse.
-7. THE OpenAPI_Document SHALL define `GET /brief` with query parameters `date` (date, required), `crews` (integer, minimum 1, required) and `capacity_per_crew` (integer, minimum 1, default 30, optional), returning a BriefResponse.
+7. THE OpenAPI_Document SHALL define `GET /brief` with query parameters `date` (date, required), `crews` (integer, minimum 1, required), `capacity_per_crew` (integer, minimum 1, default 30, optional) and `forecast_rain_in` (number, minimum 0, maximum 30, optional; when given it replaces the forecast or recorded rain for that date), returning a BriefResponse.
 8. THE OpenAPI_Document SHALL define `GET /backlog` with query parameter `limit` (integer, minimum 1, optional), returning an array of BacklogItem.
 9. THE OpenAPI_Document SHALL define `GET /cells/{cell_id}/history` with required path parameter `cell_id` (string), returning an array of Report.
 10. THE OpenAPI_Document SHALL define `GET /backtest` with no parameters, returning an array of BacktestResult.
